@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import rehypeKatex from 'rehype-katex';
+import remarkEmoji from 'remark-emoji';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
@@ -103,7 +104,7 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
 
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkGfm, remarkMath]}
+      remarkPlugins={[remarkGfm, remarkMath, remarkEmoji]}
       rehypePlugins={[rehypeKatex as any]}
       className={className}
       components={{
