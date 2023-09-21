@@ -1,17 +1,16 @@
+import Markdown from '@/components/Markdown';
 import { message } from 'antd';
 import { Octokit } from 'octokit';
 import { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
-const MarkdownView: React.FC = () => {
+const TestMarkdownView: React.FC = () => {
   const octokit = new Octokit({});
 
   const [content, setContent] = useState<string>('');
 
   octokit
     .request('GET /repos/{owner}/{repo}/contents/{path}', {
-      owner: 'duuganlx',
+      owner: 'duganlx',
       repo: 'datahub',
       path: 'tmd.md',
     })
@@ -30,10 +29,12 @@ const MarkdownView: React.FC = () => {
     });
 
   return (
-    <div>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+    <div
+      style={{ width: '90vw', margin: '0 auto', backgroundColor: '#f0f0f0', padding: '3px 5px' }}
+    >
+      <Markdown content={content} />
     </div>
   );
 };
 
-export default MarkdownView;
+export default TestMarkdownView;
