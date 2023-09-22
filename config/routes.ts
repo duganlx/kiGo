@@ -45,7 +45,7 @@ export default [
   },
   {
     path: '/demo',
-    name: '可行实验',
+    name: '实验测试',
     icon: 'ExperimentOutlined',
     hideInBreadcrumb: true,
     routes: [

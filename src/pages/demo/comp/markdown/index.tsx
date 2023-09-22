@@ -22,6 +22,7 @@ const TestMarkdownView: React.FC = () => {
 
       const base64_str = (res.data as { content: string | undefined }).content || '';
       const decoded_content = Buffer.from(base64_str, 'base64').toString();
+      console.log(decoded_content);
       setContent(decoded_content);
     })
     .catch((err) => {
