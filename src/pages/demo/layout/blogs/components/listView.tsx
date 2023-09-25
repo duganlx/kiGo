@@ -3,7 +3,6 @@ import { Tag } from 'antd';
 import React from 'react';
 
 type BlogInfoItem = {
-  key: any;
   id: number;
   title: string;
   tags: string[];
@@ -11,6 +10,7 @@ type BlogInfoItem = {
 };
 
 interface AcardViewProps {
+  // key: any;
   item: BlogInfoItem;
 }
 
