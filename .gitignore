@@ -39,3 +39,6 @@ screenshot
 .eslintcache
 
 build
+
+# tools
+tools/tmpfiles
