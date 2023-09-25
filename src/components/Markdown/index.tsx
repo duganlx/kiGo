@@ -8,6 +8,7 @@
  * [4] https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
  */
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import copy from 'copy-to-clipboard';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -16,6 +17,7 @@ import remarkEmoji from 'remark-emoji';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
+import { Button, message } from 'antd';
 import 'katex/dist/katex.min.css'; // `rehype-katex` does not import the CSS for you
 
 interface MarkdownProps {
@@ -45,28 +47,28 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
       h2: {
         fontSize: '24px',
 
-        '&:before': {
-          content: '" "',
-          display: 'inline-block',
-          height: '27px',
-          width: '5px',
-          marginRight: '5px',
-          backgroundColor: '#1890ff',
-          verticalAlign: 'text-bottom',
-        },
+        // '&:before': {
+        //   content: '" "',
+        //   display: 'inline-block',
+        //   height: '27px',
+        //   width: '5px',
+        //   marginRight: '5px',
+        //   backgroundColor: '#1890ff',
+        //   verticalAlign: 'text-bottom',
+        // },
       },
       h3: {
         fontSize: '20px',
 
-        '&:before': {
-          content: '" "',
-          display: 'inline-block',
-          height: '27px',
-          width: '5px',
-          marginRight: '5px',
-          backgroundColor: '#69c0ff',
-          verticalAlign: 'text-bottom',
-        },
+        // '&:before': {
+        //   content: '" "',
+        //   display: 'inline-block',
+        //   height: '27px',
+        //   width: '5px',
+        //   marginRight: '5px',
+        //   backgroundColor: '#69c0ff',
+        //   verticalAlign: 'text-bottom',
+        // },
       },
       'h4,h5,h6': {
         textDecoration: 'line-through',
@@ -102,6 +104,28 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
     };
   });
 
+  const cclsname = useEmotionCss(() => {
+    return {
+      padding: '10px',
+      backgroundColor: '#fff',
+      position: 'relative',
+
+      '&:hover': {
+        button: {
+          display: 'block',
+        },
+      },
+
+      button: {
+        position: 'absolute',
+        top: '10px',
+        right: '30px',
+        backgroundColor: '#bfbfbf',
+        display: 'none',
+      },
+    };
+  });
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath, remarkEmoji]}
@@ -111,9 +135,31 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
         code({ inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className || '');
           return !inline && match ? (
-            <SyntaxHighlighter {...props} style={atomOneLight} language={match[1]} PreTag="div">
-              {String(children).replace(/\n$/, '')}
-            </SyntaxHighlighter>
+            <div className={cclsname}>
+              <SyntaxHighlighter
+                {...props}
+                style={atomOneLight}
+                language={match[1]}
+                PreTag="div"
+                wrapLines
+                showLineNumbers={false}
+              >
+                {String(children).replace(/\n$/, '')}
+              </SyntaxHighlighter>
+              <Button
+                type="primary"
+                size="small"
+                onClick={() => {
+                  if (copy(String(children).replace(/\n$/, ''))) {
+                    message.success('复制成功');
+                  } else {
+                    message.error('复制失败');
+                  }
+                }}
+              >
+                copy
+              </Button>
+            </div>
           ) : (
             <code {...props} className={className}>
               {children}

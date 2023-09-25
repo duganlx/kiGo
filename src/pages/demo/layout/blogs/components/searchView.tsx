@@ -1,5 +1,6 @@
+import { InfoCircleOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { DatePicker, Input, Select } from 'antd';
+import { Button, DatePicker, Input, Select, Tooltip } from 'antd';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useEffect, useState } from 'react';
@@ -33,6 +34,7 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
   const [selectedtag, setSelectedtag] = useState<string[]>([]);
   const [begin, setBegin] = useState<dayjs.Dayjs | null>(oldestDate);
   const [end, setEnd] = useState<dayjs.Dayjs | null>(latestDate);
+  const [timeorder, setTimeorder] = useState<boolean>(false); // 时间次序
 
   const className = useEmotionCss(() => {
     return {
@@ -69,15 +71,25 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
           height: '18px',
         },
       },
-      '.frangepicker': {
-        width: '100%',
+      '.timectl': {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+
+        '.frangepicker': {
+          width: '270px',
+          marginRight: '5px',
+        },
+        '.orderswich': {
+          width: '45px',
+        },
       },
     };
   });
 
   useEffect(() => {
-    notifyFilterCondition({ keyword, selectedtag, begin, end });
-  }, [keyword, selectedtag, begin, end]);
+    notifyFilterCondition({ keyword, selectedtag, begin, end, timeorder });
+  }, [keyword, selectedtag, begin, end, timeorder]);
 
   return (
     <div className={className}>
@@ -103,19 +115,36 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
           setSelectedtag(value);
         }}
       />
-      <RangePicker
-        className="frangepicker"
-        size="small"
-        value={[begin, end]}
-        allowClear={false}
-        onChange={(value: any) => {
-          const [tmpBegin, tmpEnd] = value as [dayjs.Dayjs, dayjs.Dayjs];
+      <div className="timectl">
+        <RangePicker
+          className="frangepicker"
+          size="small"
+          value={[begin, end]}
+          allowClear={false}
+          onChange={(value: any) => {
+            const [tmpBegin, tmpEnd] = value as [dayjs.Dayjs, dayjs.Dayjs];
 
-          setBegin(tmpBegin);
-          setEnd(tmpEnd);
-        }}
-        disabledDate={generateDateRangeDisableFn(oldestDate, latestDate)}
-      />
+            setBegin(tmpBegin);
+            setEnd(tmpEnd);
+          }}
+          disabledDate={generateDateRangeDisableFn(oldestDate, latestDate)}
+        />
+        <Button
+          className="orderswich"
+          size="small"
+          type={timeorder ? 'default' : 'primary'}
+          onClick={() => {
+            setTimeorder(!timeorder);
+          }}
+        >
+          {timeorder ? 'asc' : 'desc'}
+        </Button>
+        <div style={{ color: '#bfbfbf', marginLeft: '4px' }}>
+          <Tooltip title="排序规则: desc(新->久), asc(久->新)">
+            <InfoCircleOutlined />
+          </Tooltip>
+        </div>
+      </div>
     </div>
   );
 };

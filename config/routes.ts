@@ -73,9 +73,9 @@ export default [
         hideInBreadcrumb: true,
         routes: [
           {
-            path: '/demo/layout/dataMarket',
-            name: '数据集市',
-            component: './demo/layout/dataMarket',
+            path: '/demo/layout/blogs',
+            name: '博客',
+            component: './demo/layout/blogs',
             hideInBreadcrumb: true,
           },
         ],
