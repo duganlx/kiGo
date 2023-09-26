@@ -19,8 +19,8 @@ function generateDateRangeDisableFn(begin: dayjs.Dayjs | null, end: dayjs.Dayjs 
 }
 
 interface SearchViewProps {
-  oldestDate: dayjs.Dayjs;
-  latestDate: dayjs.Dayjs;
+  oldestDate: dayjs.Dayjs | null;
+  latestDate: dayjs.Dayjs | null;
 
   selectOpts: any[];
 
@@ -32,8 +32,8 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
 
   const [keyword, setKeyword] = useState<string>('');
   const [selectedtag, setSelectedtag] = useState<string[]>([]);
-  const [begin, setBegin] = useState<dayjs.Dayjs | null>(oldestDate);
-  const [end, setEnd] = useState<dayjs.Dayjs | null>(latestDate);
+  const [begin, setBegin] = useState<dayjs.Dayjs | null>(null);
+  const [end, setEnd] = useState<dayjs.Dayjs | null>(null);
   const [timeorder, setTimeorder] = useState<boolean>(false); // 时间次序
 
   const className = useEmotionCss(() => {
@@ -88,6 +88,16 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
   });
 
   useEffect(() => {
+    if (oldestDate === null || latestDate === null) {
+      return;
+    }
+
+    console.log(oldestDate.format('YYYY-MM-DD'), latestDate.format('YYYY-MM-DD'));
+    setBegin(oldestDate);
+    setEnd(latestDate);
+  }, [oldestDate, latestDate]);
+
+  useEffect(() => {
     notifyFilterCondition({ keyword, selectedtag, begin, end, timeorder });
   }, [keyword, selectedtag, begin, end, timeorder]);
 
@@ -110,6 +120,7 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
         placeholder="标签过滤"
         allowClear
         size="small"
+        maxTagCount="responsive"
         value={selectedtag}
         onChange={(value: string[]) => {
           setSelectedtag(value);

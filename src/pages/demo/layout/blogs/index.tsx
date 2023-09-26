@@ -1,63 +1,83 @@
 import Markdown from '@/components/Markdown';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { message } from 'antd';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import isBetween from 'dayjs/plugin/isBetween';
+import { Octokit } from 'octokit';
+import { useEffect, useState } from 'react';
 import ListView from './components/listView';
 import SearchView from './components/searchView';
 
+dayjs.extend(isBetween);
+
+type CatalogItem = {
+  id: number;
+  title: string;
+  tags: string[];
+  dir: string;
+  createTime: string;
+  updateTime: string;
+};
+
+function calcEdgeDate(items: CatalogItem[]) {
+  let latestDate = dayjs('1999-01-02');
+  let oldestDate = dayjs();
+
+  for (let i = 0; i < items.length; i++) {
+    const idate = dayjs(items[i].createTime, 'YYYY-MM-DD');
+
+    if (latestDate.isBefore(idate)) {
+      latestDate = idate;
+    }
+
+    if (oldestDate.isAfter(idate)) {
+      oldestDate = idate;
+    }
+  }
+
+  return [oldestDate, latestDate];
+}
+
+function genTagSelectOpt(items: CatalogItem[]) {
+  const tagset = new Set<string>();
+
+  items.forEach((item) => {
+    const tags = item.tags;
+
+    tags.forEach((tag) => {
+      tagset.add(tag);
+    });
+  });
+
+  const unitags = Array.from(tagset);
+
+  return unitags.map((item) => ({ value: item }));
+}
+
+function sortCatalogItems(items: CatalogItem[]) {
+  // todo 完成功能
+  const dateMap: Record<string, CatalogItem[]> = {};
+
+  items.forEach((item) => {
+    if (dateMap[item.createTime] === undefined) {
+      dateMap[item.createTime] = [];
+    }
+
+    dateMap[item.createTime].push(item);
+  });
+}
+
 const BlogsView: React.FC = () => {
+  const octokit = new Octokit({});
+
   const [navstate, setNavstate] = useState<boolean>(false); // false: opening, true: closed
 
-  const data = [
-    {
-      id: 1,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'xxx'],
-      createTime: '2023-09-25',
-    },
-    {
-      id: 2,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'ddd'],
-      createTime: '2023-09-25',
-    },
-    {
-      id: 3,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'ddd'],
-      createTime: '2023-09-25',
-    },
-    {
-      id: 4,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'ddd'],
-      createTime: '2023-09-25',
-    },
-    {
-      id: 5,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'ddd'],
-      createTime: '2023-09-25',
-    },
-    {
-      id: 6,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'ddd'],
-      createTime: '2023-09-25',
-    },
-    {
-      id: 7,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'ddd'],
-      createTime: '2023-09-25',
-    },
-    {
-      id: 8,
-      title: '标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题',
-      tags: ['数据', 'ddd'],
-      createTime: '2023-09-25',
-    },
-  ];
+  const [catalog, setCatalog] = useState<CatalogItem[]>([]); // 按createTime降序 latest -> oldest
+  const [oldestDate, setOldestDate] = useState<dayjs.Dayjs | null>(null);
+  const [latestDate, setLatestDate] = useState<dayjs.Dayjs | null>(null);
+  const [tagselectopt, setTagselectopt] = useState<any[]>([]);
+  const [catalogfilter, setCatalogfilter] = useState<any>({});
+  const [rendercatalog, setRendercatalog] = useState<CatalogItem[]>([]);
 
   const className = useEmotionCss(() => {
     return {
@@ -112,10 +132,79 @@ const BlogsView: React.FC = () => {
     };
   });
 
+  useEffect(() => {
+    octokit
+      .request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: 'duganlx',
+        repo: 'datahub',
+        path: 'blogs/catalog.json',
+      })
+      .then((res) => {
+        if (res.status !== 200) {
+          message.info('获取数据失败');
+          return;
+        }
+
+        const base64_str = (res.data as { content: string | undefined }).content || '';
+        const decoded_content = Buffer.from(base64_str, 'base64').toString();
+        const catalogjson = JSON.parse(decoded_content);
+        // todo 时间排序
+        sortCatalogItems(catalogjson);
+        const [od, ld] = calcEdgeDate(catalogjson);
+        const tso = genTagSelectOpt(catalogjson);
+
+        setTagselectopt(tso);
+        setOldestDate(od);
+        setLatestDate(ld);
+        setCatalog(catalogjson);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    // todo 完成过滤
+    let tcatalog = [...catalog];
+
+    if (catalogfilter.keyword !== '') {
+      tcatalog = tcatalog.filter((item) => {
+        const title = item.title;
+
+        return title.indexOf(catalogfilter.keyword) !== -1;
+      });
+    }
+
+    if ((catalogfilter.selectedtag || []).length !== 0) {
+      tcatalog = tcatalog.filter((item) => {
+        const tags = item.tags;
+        let isMatch = false;
+
+        for (let i = 0; i < catalogfilter.selectedtag.length; i++) {
+          const expecttag = catalogfilter.selectedtag[i];
+
+          if (tags.indexOf(expecttag) !== -1) {
+            isMatch = true;
+            break;
+          }
+        }
+
+        return isMatch;
+      });
+    }
+
+    // todo 时间过滤
+    // if (catalogfilter.timeorder) {
+    //   tcatalog =
+    // }
+
+    setRendercatalog(tcatalog);
+  }, [catalogfilter]);
+
   const content = `
 # xxxx
 
-1 + 2 = 3
+1 + 2 = 35 
 ~~~go
 fmt.Println("xxx");
 fmt.Println("yyy");
@@ -133,20 +222,15 @@ fmt.Println("yyy");
         />
         <div className="navcontent">
           <SearchView
-            oldestDate={dayjs('2017-01-01')}
-            latestDate={dayjs()}
-            selectOpts={[
-              { value: 'gold' },
-              { value: 'lime' },
-              { value: 'green' },
-              { value: 'cyan' },
-            ]}
+            oldestDate={oldestDate}
+            latestDate={latestDate}
+            selectOpts={tagselectopt}
             notifyFilterCondition={(fc: any) => {
-              console.log('filter', fc);
+              setCatalogfilter(fc);
             }}
           />
           <div style={{ width: '100%', height: '15px' }} />
-          <ListView blogItems={data} />
+          <ListView blogItems={rendercatalog} />
         </div>
       </div>
       <div className="main">

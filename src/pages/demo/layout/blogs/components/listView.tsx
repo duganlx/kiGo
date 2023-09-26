@@ -29,8 +29,10 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
       },
 
       '.acard-title': {
-        fontWeight: 'bold',
-        marginBottom: '3px',
+        color: 'black',
+        marginBottom: '5px',
+        fontSize: '15px',
+        wordSpacing: '1px',
       },
 
       '.acard-info': {
@@ -63,6 +65,7 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
     <div
       className={className}
       onClick={() => {
+        // todo 需要通知外层
         console.log(item);
       }}
     >
@@ -129,6 +132,7 @@ const ListView: React.FC<ListViewProps> = (props) => {
     };
   });
 
+  // todo 没有数据时展示问题
   return (
     <div className={className}>
       <div className="title">List</div>
