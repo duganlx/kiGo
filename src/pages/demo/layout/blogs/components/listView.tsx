@@ -1,5 +1,6 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { Tag } from 'antd';
+import { useModel } from '@umijs/max';
+import { Empty, Spin, Tag } from 'antd';
 import React from 'react';
 
 type BlogInfoItem = {
@@ -17,6 +18,10 @@ interface AcardViewProps {
 const AcardView: React.FC<AcardViewProps> = (props) => {
   const { item } = props;
   const { title, tags, createTime } = item;
+
+  const { setAccatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
+    setAccatalog: m.udAccatalog,
+  }));
 
   const className = useEmotionCss(() => {
     return {
@@ -65,8 +70,7 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
     <div
       className={className}
       onClick={() => {
-        // todo 需要通知外层
-        console.log(item);
+        setAccatalog(item);
       }}
     >
       <div className="acard-title">{title}</div>
@@ -88,10 +92,11 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
 
 interface ListViewProps {
   blogItems: BlogInfoItem[];
+  loading: boolean;
 }
 
 const ListView: React.FC<ListViewProps> = (props) => {
-  const { blogItems: data } = props;
+  const { blogItems: data, loading } = props;
 
   const className = useEmotionCss(() => {
     return {
@@ -119,6 +124,14 @@ const ListView: React.FC<ListViewProps> = (props) => {
         height: '100%',
         overflowY: 'scroll',
 
+        '.loading': {
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+
         '::-webkit-scrollbar': {
           backgroundColor: 'white',
           width: '5px',
@@ -132,14 +145,19 @@ const ListView: React.FC<ListViewProps> = (props) => {
     };
   });
 
-  // todo 没有数据时展示问题
   return (
     <div className={className}>
       <div className="title">List</div>
       <div className="content">
-        {data.map((item) => (
-          <AcardView key={item.id} item={item} />
-        ))}
+        {loading ? (
+          <div className="loading">
+            <Spin />
+          </div>
+        ) : data.length > 0 ? (
+          data.map((item) => <AcardView key={item.id} item={item} />)
+        ) : (
+          <Empty />
+        )}
       </div>
     </div>
   );

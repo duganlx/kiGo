@@ -1,23 +1,17 @@
-import Markdown from '@/components/Markdown';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { useModel } from '@umijs/max';
 import { message } from 'antd';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { Octokit } from 'octokit';
 import { useEffect, useState } from 'react';
+import ContentView from './components/contentView';
 import ListView from './components/listView';
 import SearchView from './components/searchView';
+import { CatalogItem } from './model';
+import { content1 } from './testContent';
 
 dayjs.extend(isBetween);
-
-type CatalogItem = {
-  id: number;
-  title: string;
-  tags: string[];
-  dir: string;
-  createTime: string;
-  updateTime: string;
-};
 
 function calcEdgeDate(items: CatalogItem[]) {
   let latestDate = dayjs('1999-01-02');
@@ -55,7 +49,7 @@ function genTagSelectOpt(items: CatalogItem[]) {
 }
 
 function sortCatalogItems(items: CatalogItem[]) {
-  // todo 完成功能
+  // 升序 [oldest, ..., latest]
   const dateMap: Record<string, CatalogItem[]> = {};
 
   items.forEach((item) => {
@@ -65,6 +59,22 @@ function sortCatalogItems(items: CatalogItem[]) {
 
     dateMap[item.createTime].push(item);
   });
+
+  const sortedKey = Object.keys(dateMap).sort((a, b) => {
+    const adateunix = dayjs(a, 'YYYY-MM-DD').unix();
+    const bdateunix = dayjs(b, 'YYYY-MM-DD').unix();
+
+    return adateunix - bdateunix;
+  });
+
+  const sortedItems: CatalogItem[] = [];
+
+  sortedKey.forEach((key) => {
+    const cts = dateMap[key];
+    sortedItems.push(...cts);
+  });
+
+  return sortedItems;
 }
 
 const BlogsView: React.FC = () => {
@@ -73,11 +83,19 @@ const BlogsView: React.FC = () => {
   const [navstate, setNavstate] = useState<boolean>(false); // false: opening, true: closed
 
   const [catalog, setCatalog] = useState<CatalogItem[]>([]); // 按createTime降序 latest -> oldest
+  const [loadingcatalog, setLoadingcatalog] = useState<boolean>(false);
   const [oldestDate, setOldestDate] = useState<dayjs.Dayjs | null>(null);
   const [latestDate, setLatestDate] = useState<dayjs.Dayjs | null>(null);
   const [tagselectopt, setTagselectopt] = useState<any[]>([]);
   const [catalogfilter, setCatalogfilter] = useState<any>({});
   const [rendercatalog, setRendercatalog] = useState<CatalogItem[]>([]);
+
+  const [content, setContent] = useState<string>('');
+  const [loadingcontent, setLoadingcontent] = useState<boolean>(false);
+
+  const { accatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
+    accatalog: m.accatalog as CatalogItem,
+  }));
 
   const className = useEmotionCss(() => {
     return {
@@ -125,6 +143,7 @@ const BlogsView: React.FC = () => {
       '.main': {
         flex: '1 1 auto',
         height: '100%',
+        width: '100%',
         backgroundColor: 'white',
         marginRight: '5px',
         padding: '10px 5px 3px 5px',
@@ -133,6 +152,7 @@ const BlogsView: React.FC = () => {
   });
 
   useEffect(() => {
+    setLoadingcatalog(true);
     octokit
       .request('GET /repos/{owner}/{repo}/contents/{path}', {
         owner: 'duganlx',
@@ -141,30 +161,34 @@ const BlogsView: React.FC = () => {
       })
       .then((res) => {
         if (res.status !== 200) {
-          message.info('获取数据失败');
+          message.info('获取目录数据失败');
           return;
         }
 
         const base64_str = (res.data as { content: string | undefined }).content || '';
         const decoded_content = Buffer.from(base64_str, 'base64').toString();
         const catalogjson = JSON.parse(decoded_content);
-        // todo 时间排序
-        sortCatalogItems(catalogjson);
-        const [od, ld] = calcEdgeDate(catalogjson);
-        const tso = genTagSelectOpt(catalogjson);
+        const procItems = sortCatalogItems(catalogjson);
+        const [od, ld] = calcEdgeDate(procItems);
+        const tso = genTagSelectOpt(procItems);
 
         setTagselectopt(tso);
         setOldestDate(od);
         setLatestDate(ld);
-        setCatalog(catalogjson);
+        setCatalog(procItems);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoadingcatalog(false);
       });
+
+    // test content
+    setContent(content1);
   }, []);
 
   useEffect(() => {
-    // todo 完成过滤
     let tcatalog = [...catalog];
 
     if (catalogfilter.keyword !== '') {
@@ -193,23 +217,44 @@ const BlogsView: React.FC = () => {
       });
     }
 
-    // todo 时间过滤
-    // if (catalogfilter.timeorder) {
-    //   tcatalog =
-    // }
+    if (catalogfilter.timeorder) {
+      tcatalog = tcatalog.reverse();
+    }
+
+    // todo 时间过滤功能
+    // console.log(catalogfilter.begin, catalogfilter.end)
 
     setRendercatalog(tcatalog);
   }, [catalogfilter]);
 
-  const content = `
-# xxxx
+  useEffect(() => {
+    if (accatalog === null) {
+      return;
+    }
 
-1 + 2 = 35 
-~~~go
-fmt.Println("xxx");
-fmt.Println("yyy");
-~~~
-`;
+    setLoadingcontent(true);
+    const aimDir = accatalog.dir;
+    octokit
+      .request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: 'duganlx',
+        repo: 'datahub',
+        path: `blogs/${aimDir}/README.md`,
+      })
+      .then((res) => {
+        if (res.status !== 200) {
+          message.info('获取文章数据失败');
+          return;
+        }
+
+        const base64_str = (res.data as { content: string | undefined }).content || '';
+        const decoded_content = Buffer.from(base64_str, 'base64').toString();
+
+        setContent(decoded_content);
+      })
+      .finally(() => {
+        setLoadingcontent(false);
+      });
+  }, [accatalog]);
 
   return (
     <div className={className}>
@@ -221,6 +266,8 @@ fmt.Println("yyy");
           }}
         />
         <div className="navcontent">
+          <ListView blogItems={rendercatalog} loading={loadingcatalog} />
+          <div style={{ width: '100%', height: '15px' }} />
           <SearchView
             oldestDate={oldestDate}
             latestDate={latestDate}
@@ -229,12 +276,10 @@ fmt.Println("yyy");
               setCatalogfilter(fc);
             }}
           />
-          <div style={{ width: '100%', height: '15px' }} />
-          <ListView blogItems={rendercatalog} />
         </div>
       </div>
       <div className="main">
-        <Markdown content={content} />
+        <ContentView loadingcontent={loadingcontent} content={content} />
       </div>
     </div>
   );

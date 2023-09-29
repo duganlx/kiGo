@@ -34,7 +34,7 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
   const [selectedtag, setSelectedtag] = useState<string[]>([]);
   const [begin, setBegin] = useState<dayjs.Dayjs | null>(null);
   const [end, setEnd] = useState<dayjs.Dayjs | null>(null);
-  const [timeorder, setTimeorder] = useState<boolean>(false); // 时间次序
+  const [timeorder, setTimeorder] = useState<boolean>(true); // 时间次序
 
   const className = useEmotionCss(() => {
     return {
@@ -92,7 +92,7 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
       return;
     }
 
-    console.log(oldestDate.format('YYYY-MM-DD'), latestDate.format('YYYY-MM-DD'));
+    // console.log(oldestDate.format('YYYY-MM-DD'), latestDate.format('YYYY-MM-DD'));
     setBegin(oldestDate);
     setEnd(latestDate);
   }, [oldestDate, latestDate]);
@@ -139,6 +139,7 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
             setEnd(tmpEnd);
           }}
           disabledDate={generateDateRangeDisableFn(oldestDate, latestDate)}
+          disabled
         />
         <Button
           className="orderswich"
@@ -148,10 +149,10 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
             setTimeorder(!timeorder);
           }}
         >
-          {timeorder ? 'asc' : 'desc'}
+          {timeorder ? 'desc' : 'asc'}
         </Button>
         <div style={{ color: '#bfbfbf', marginLeft: '4px' }}>
-          <Tooltip title="排序规则: desc(新->久), asc(久->新)">
+          <Tooltip title="排序规则: desc(降序), asc(升序)">
             <InfoCircleOutlined />
           </Tooltip>
         </div>

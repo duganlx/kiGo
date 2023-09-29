@@ -22,13 +22,18 @@ import 'katex/dist/katex.min.css'; // `rehype-katex` does not import the CSS for
 
 interface MarkdownProps {
   content: string;
+  // wrapdiv: HTMLDivElement;
+  height: number;
+  width: number;
 }
 
 const Markdown: React.FC<MarkdownProps> = (props) => {
-  const { content } = props;
+  const { content, height, width } = props;
 
   const className = useEmotionCss(() => {
     return {
+      height: `${height}px`,
+      width: `${width}px`,
       fontSize: '16px',
       h1: {
         fontSize: '28px',
@@ -109,6 +114,7 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
       padding: '10px',
       backgroundColor: '#fff',
       position: 'relative',
+      width: 'calc(100% - 10px)',
 
       '&:hover': {
         button: {
@@ -125,6 +131,8 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
       },
     };
   });
+
+  console.log(height, width);
 
   return (
     <ReactMarkdown
