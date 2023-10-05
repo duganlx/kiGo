@@ -20,21 +20,28 @@ import remarkMath from 'remark-math';
 import { Button, message } from 'antd';
 import 'katex/dist/katex.min.css'; // `rehype-katex` does not import the CSS for you
 
-interface MarkdownProps {
-  content: string;
-  // wrapdiv: HTMLDivElement;
+export interface LayoutCfg {
   height: number;
   width: number;
 }
 
+interface MarkdownProps {
+  content: string;
+  // wrapdiv: HTMLDivElement;
+  layoutCfg: LayoutCfg;
+}
+
 const Markdown: React.FC<MarkdownProps> = (props) => {
-  const { content, height, width } = props;
+  const { content, layoutCfg } = props;
+  const { height, width } = layoutCfg;
 
   const className = useEmotionCss(() => {
     return {
       height: `${height}px`,
       width: `${width}px`,
+      // background: 'black',
       fontSize: '16px',
+
       h1: {
         fontSize: '28px',
         // verticalAlign: 'middle',
@@ -106,6 +113,10 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
           },
         },
       },
+
+      '.katex-mathml': {
+        display: 'none',
+      },
     };
   });
 
@@ -114,7 +125,7 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
       padding: '10px',
       backgroundColor: '#fff',
       position: 'relative',
-      width: 'calc(100% - 10px)',
+      width: `${width - 10}px`,
 
       '&:hover': {
         button: {
@@ -132,8 +143,7 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
     };
   });
 
-  console.log(height, width);
-
+  // console.log(height, width);
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath, remarkEmoji]}

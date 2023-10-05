@@ -1,17 +1,20 @@
+import { LayoutCfg } from '@/components/Markdown';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
+import { debounce } from 'lodash';
 import { Octokit } from 'octokit';
 import { useEffect, useState } from 'react';
 import ContentView from './components/contentView';
 import ListView from './components/listView';
 import SearchView from './components/searchView';
 import { CatalogItem } from './model';
-import { content1 } from './testContent';
 
 dayjs.extend(isBetween);
+
+const navpartWidth: number = 350;
 
 function calcEdgeDate(items: CatalogItem[]) {
   let latestDate = dayjs('1999-01-02');
@@ -92,6 +95,7 @@ const BlogsView: React.FC = () => {
 
   const [content, setContent] = useState<string>('');
   const [loadingcontent, setLoadingcontent] = useState<boolean>(false);
+  const [contentlayout, setContentlayout] = useState<LayoutCfg | undefined>(undefined);
 
   const { accatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
     accatalog: m.accatalog as CatalogItem,
@@ -109,7 +113,7 @@ const BlogsView: React.FC = () => {
       '.navpart': {
         backgroundColor: 'white',
         height: '100%',
-        width: navstate ? 0 : '350px',
+        width: navstate ? 0 : `${navpartWidth}px`,
         marginRight: '35px',
         position: 'relative',
 
@@ -185,7 +189,19 @@ const BlogsView: React.FC = () => {
       });
 
     // test content
-    setContent(content1);
+    setContent('');
+  }, []);
+
+  useEffect(() => {
+    const debounceRender = debounce(function (height: number, width: number) {
+      setContentlayout({ height, width });
+    }, 300);
+
+    window.addEventListener('resize', () => {
+      debounceRender(window.innerHeight - 40, window.innerWidth);
+    });
+
+    setContentlayout({ height: window.innerHeight - 40, width: window.innerWidth });
   }, []);
 
   useEffect(() => {
@@ -279,7 +295,13 @@ const BlogsView: React.FC = () => {
         </div>
       </div>
       <div className="main">
-        <ContentView loadingcontent={loadingcontent} content={content} />
+        <ContentView
+          loadingcontent={loadingcontent}
+          content={content}
+          navstate={navstate}
+          contentlayout={contentlayout}
+          navpartWidth={navpartWidth}
+        />
       </div>
     </div>
   );
