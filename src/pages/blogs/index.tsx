@@ -3,7 +3,7 @@ import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { useModel } from '@umijs/max';
 import { message } from 'antd';
 import dayjs from 'dayjs';
-import isBetween from 'dayjs/plugin/isBetween';
+// import isBetween from 'dayjs/plugin/isBetween';
 import { debounce } from 'lodash';
 import { Octokit } from 'octokit';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ import ListView from './components/listView';
 import SearchView from './components/searchView';
 import { CatalogItem } from './model';
 
-dayjs.extend(isBetween);
+// dayjs.extend(isBetween);
 
 const navpartWidth: number = 350;
 
@@ -107,7 +107,7 @@ const BlogsView: React.FC = () => {
   const [loadingcontent, setLoadingcontent] = useState<boolean>(false);
   const [contentlayout, setContentlayout] = useState<LayoutCfg | undefined>(undefined);
 
-  const { accatalog, setAccatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
+  const { accatalog, setAccatalog } = useModel('blogs.model', (m: any) => ({
     accatalog: m.accatalog as CatalogItem,
     setAccatalog: m.udAccatalog,
   }));
@@ -278,7 +278,7 @@ const BlogsView: React.FC = () => {
         const decoded_content = Buffer.from(base64_str, 'base64').toString();
 
         const proc_content = procContent(decoded_content, accatalog);
-        console.log(proc_content);
+        // console.log(proc_content);
         setContent(proc_content);
       })
       .finally(() => {

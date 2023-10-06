@@ -13,11 +13,11 @@
 export default [
   {
     path: '/',
-    name: '初识网站',
+    name: '待客室',
     icon: 'CrownOutlined',
     routes: [
       {
-        name: '网站说明',
+        name: '介绍',
         path: '/',
         routes: [
           {
@@ -29,15 +29,27 @@ export default [
             name: '欢迎页',
             component: './desc/welcome',
           },
+          // {
+          //   path: '/home',
+          //   name: '首页',
+          //   component: './desc/home',
+          // },
           {
-            path: '/home',
-            name: '首页',
-            component: './desc/home',
-          },
-          {
-            name: '个人介绍',
+            name: '关于我',
             path: '/me',
             component: './desc/me',
+          },
+        ],
+      },
+      {
+        name: '见闻',
+        path: '/feel',
+        routes: [
+          {
+            path: '/feel/blogs',
+            name: '博客',
+            component: './blogs',
+            hideInBreadcrumb: true,
           },
         ],
       },
@@ -45,7 +57,7 @@ export default [
   },
   {
     path: '/demo',
-    name: '实验测试',
+    name: '实验室',
     icon: 'ExperimentOutlined',
     hideInBreadcrumb: true,
     routes: [
@@ -60,40 +72,9 @@ export default [
             hideInBreadcrumb: true,
           },
           {
-            path: '/demo/comp/markdown',
-            name: 'markdown',
-            component: './demo/comp/markdown',
-            hideInBreadcrumb: true,
-          },
-        ],
-      },
-      {
-        name: '布局',
-        path: '/demo/layout',
-        hideInBreadcrumb: true,
-        routes: [
-          {
-            path: '/demo/layout/blogs',
-            name: '博客',
-            component: './demo/layout/blogs',
-            hideInBreadcrumb: true,
-          },
-        ],
-      },
-      {
-        name: '表格',
-        path: '/demo/table',
-        hideInBreadcrumb: true,
-        routes: [
-          {
-            path: '/demo/table/antd',
-            name: 'antd',
-            component: './demo/table/antdT',
-          },
-          {
-            path: '/demo/table/s2table',
+            path: '/demo/comp/s2table',
             name: 's2table',
-            component: './demo/table/s2table',
+            component: './demo/comp/s2table',
           },
         ],
       },

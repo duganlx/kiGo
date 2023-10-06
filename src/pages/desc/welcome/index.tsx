@@ -106,7 +106,7 @@ const Welcome: React.FC = () => {
       <div
         className="bottom"
         onClick={() => {
-          const homePath = '/home';
+          const homePath = '/feel/blogs';
           history.push(homePath);
         }}
         onMouseEnter={() => {
@@ -118,7 +118,7 @@ const Welcome: React.FC = () => {
       >
         <div className={classNames(style.enter, 'enter')}>
           <div className="rocket">&#x1F680;</div>
-          <div className="rocket-label">首页</div>
+          <div className="rocket-label">博客</div>
         </div>
       </div>
     </div>
