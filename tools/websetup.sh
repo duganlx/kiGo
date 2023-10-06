@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # todo 提交日志控制台输入
-commitlog="add bash"
+thistime=$(date "+%Y%m%d%H%M%S")
+commitlog="update $thistime"
 echo "$commitlog"
 
 script_path=$(dirname $(readlink -f $0))

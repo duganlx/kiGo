@@ -223,7 +223,7 @@ const BlogsView: React.FC = () => {
       tcatalog = tcatalog.filter((item) => {
         const title = item.title;
 
-        return title.indexOf(catalogfilter.keyword) !== -1;
+        return title.toLowerCase().indexOf(catalogfilter.keyword.toLowerCase()) !== -1;
       });
     }
 
