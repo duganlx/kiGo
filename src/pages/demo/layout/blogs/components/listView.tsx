@@ -19,7 +19,8 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
   const { item } = props;
   const { title, tags, createTime } = item;
 
-  const { setAccatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
+  const { accatalog, setAccatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
+    accatalog: m.accatalog,
     setAccatalog: m.udAccatalog,
   }));
 
@@ -28,6 +29,7 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
       borderBottom: '1px solid #d9d9d9',
       padding: '5px 2px 1px 5px',
       cursor: 'pointer',
+      backgroundColor: accatalog && accatalog.id === item.id ? '#f9f0ff' : 'white',
 
       '&:hover': {
         backgroundColor: '#fafafa',

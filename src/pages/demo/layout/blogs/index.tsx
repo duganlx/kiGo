@@ -80,6 +80,16 @@ function sortCatalogItems(items: CatalogItem[]) {
   return sortedItems;
 }
 
+function procContent(content: string, info: CatalogItem) {
+  const datahuburl = 'https://github.com/duganlx/datahub/blob/main/blogs';
+  const prefix = datahuburl + '/' + info.dir;
+
+  const regex = /!\[(.*?)\]\((.*?)\)/g;
+  const ncontent = content.replace(regex, `![$1](${prefix}/$2?raw=true)`);
+
+  return ncontent;
+}
+
 const BlogsView: React.FC = () => {
   const octokit = new Octokit({});
 
@@ -97,8 +107,9 @@ const BlogsView: React.FC = () => {
   const [loadingcontent, setLoadingcontent] = useState<boolean>(false);
   const [contentlayout, setContentlayout] = useState<LayoutCfg | undefined>(undefined);
 
-  const { accatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
+  const { accatalog, setAccatalog } = useModel('demo.layout.blogs.model', (m: any) => ({
     accatalog: m.accatalog as CatalogItem,
+    setAccatalog: m.udAccatalog,
   }));
 
   const className = useEmotionCss(() => {
@@ -180,6 +191,10 @@ const BlogsView: React.FC = () => {
         setOldestDate(od);
         setLatestDate(ld);
         setCatalog(procItems);
+        if (procItems.length > 0) {
+          const lastindex = procItems.length - 1;
+          setAccatalog(procItems[lastindex]);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -187,9 +202,6 @@ const BlogsView: React.FC = () => {
       .finally(() => {
         setLoadingcatalog(false);
       });
-
-    // test content
-    setContent('');
   }, []);
 
   useEffect(() => {
@@ -265,7 +277,9 @@ const BlogsView: React.FC = () => {
         const base64_str = (res.data as { content: string | undefined }).content || '';
         const decoded_content = Buffer.from(base64_str, 'base64').toString();
 
-        setContent(decoded_content);
+        const proc_content = procContent(decoded_content, accatalog);
+        console.log(proc_content);
+        setContent(proc_content);
       })
       .finally(() => {
         setLoadingcontent(false);
