@@ -8,6 +8,7 @@ type BlogInfoItem = {
   title: string;
   tags: string[];
   createTime: string;
+  updateTime: string;
 };
 
 interface AcardViewProps {
@@ -17,7 +18,7 @@ interface AcardViewProps {
 
 const AcardView: React.FC<AcardViewProps> = (props) => {
   const { item } = props;
-  const { title, tags, createTime } = item;
+  const { title, tags, updateTime } = item;
 
   const { accatalog, setAccatalog } = useModel('blogs.model', (m: any) => ({
     accatalog: m.accatalog,
@@ -86,7 +87,7 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
             );
           })}
         </div>
-        <div className="acardinfo-time">{createTime}</div>
+        <div className="acardinfo-time">{updateTime}</div>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ function calcEdgeDate(items: CatalogItem[]) {
   let oldestDate = dayjs();
 
   for (let i = 0; i < items.length; i++) {
-    const idate = dayjs(items[i].createTime, 'YYYY-MM-DD');
+    const idate = dayjs(items[i].updateTime, 'YYYY-MM-DD');
 
     if (latestDate.isBefore(idate)) {
       latestDate = idate;
@@ -56,11 +56,11 @@ function sortCatalogItems(items: CatalogItem[]) {
   const dateMap: Record<string, CatalogItem[]> = {};
 
   items.forEach((item) => {
-    if (dateMap[item.createTime] === undefined) {
-      dateMap[item.createTime] = [];
+    if (dateMap[item.updateTime] === undefined) {
+      dateMap[item.updateTime] = [];
     }
 
-    dateMap[item.createTime].push(item);
+    dateMap[item.updateTime].push(item);
   });
 
   const sortedKey = Object.keys(dateMap).sort((a, b) => {
