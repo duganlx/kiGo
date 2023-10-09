@@ -225,8 +225,7 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
         }}
       >
         <span className={'popover-menu-icon'}>
-          <AppstoreOutlined style={{ marginRight: '4px' }} />
-          菜单
+          <AppstoreOutlined />
         </span>
       </Popover>
     </div>

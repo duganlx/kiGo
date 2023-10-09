@@ -17,7 +17,7 @@ export default [
     icon: 'CrownOutlined',
     routes: [
       {
-        name: '介绍',
+        name: 'INTRODUCTION',
         path: '/',
         routes: [
           {
@@ -26,7 +26,7 @@ export default [
           },
           {
             path: '/',
-            name: '欢迎页',
+            name: 'Welcome',
             component: './desc/welcome',
           },
           // {
@@ -35,7 +35,7 @@ export default [
           //   component: './desc/home',
           // },
           {
-            name: '关于我',
+            name: 'About Me',
             path: '/me',
             component: './desc/me',
           },
@@ -47,7 +47,7 @@ export default [
         routes: [
           {
             path: '/feel/blogs',
-            name: '博客',
+            name: 'Blogs',
             component: './blogs',
             hideInBreadcrumb: true,
           },

@@ -55,6 +55,7 @@ const SearchView: React.FC<SearchViewProps> = (props) => {
         zIndex: 10,
         fontSize: '16px',
         fontWeight: 'bold',
+        fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
         // margin: '0 3px',
       },
 

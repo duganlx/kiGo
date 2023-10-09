@@ -3,7 +3,7 @@ import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
-import { AboutMe, Github } from './components';
+import { AboutMe } from './components';
 import PopoverMenuView from './components/PopoverMenu';
 import { LayoutContentView } from './layoutContent';
 import { errorConfig } from './requestErrorConfig';
@@ -23,7 +23,7 @@ export async function getInitialState(): Promise<{
   console.log('getInitialState()');
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser({
+      const msg: any = await queryCurrentUser({
         skipErrorHandler: true,
       });
 
@@ -55,7 +55,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
-    actionsRender: () => [<AboutMe key="aboutMe" />, <Github key="github" />],
+    actionsRender: () => [<AboutMe key="aboutMe" />],
     // avatarProps: {
     //   src: initialState?.currentUser?.avatar,
     //   title: <AvatarName />,

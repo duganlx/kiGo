@@ -1,6 +1,5 @@
 import { GithubOutlined, UserOutlined } from '@ant-design/icons';
 import { history } from '@umijs/max';
-import { Tooltip } from 'antd';
 
 export type SiderTheme = 'light' | 'dark';
 
@@ -30,9 +29,7 @@ export const AboutMe = () => {
         history.push(path);
       }}
     >
-      <Tooltip title="关于我" placement="bottom">
-        <UserOutlined />
-      </Tooltip>
+      <UserOutlined />
     </div>
   );
 };

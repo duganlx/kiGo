@@ -1,5 +1,6 @@
-import { WechatOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import Authordesc from './components/authordesc';
+import Contentview from './components/contentview';
 
 const Me: React.FC = () => {
   const className = useEmotionCss(() => {
@@ -11,43 +12,21 @@ const Me: React.FC = () => {
       padding: '10px 3px',
       position: 'relative',
 
-      '.content': {
-        width: '95vw',
+      '.aview': {
+        width: '75vw',
         backgroundColor: 'white',
         display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
+        flexDirection: 'row',
         padding: '10px 3px',
 
-        '.bname': {
-          fontSize: '24px',
-        },
-        '.dividingline': {
-          width: '90%',
-          height: '1px',
-          margin: '10px 0 20px 0',
-          backgroundColor: '#bfbfbf',
+        '.left': {
+          width: '250px',
+          padding: '10px 15px 5px',
         },
 
-        '.mimage': {
-          height: '150px',
-          width: '225px',
-        },
-        '.descmine': {
-          marginTop: '30px',
-          width: '100%',
-          // backgroundColor: 'yellowgreen',
-          padding: '10px 15px',
-
-          p: {
-            fontSize: '18px',
-          },
-
-          '.wechat': {
-            display: 'none',
-            cursor: 'pointer',
-          },
+        '.right': {
+          // height: '100px',
+          flex: '1 1 auto',
         },
       },
     };
@@ -55,30 +34,12 @@ const Me: React.FC = () => {
 
   return (
     <div className={className}>
-      {/* <div className="pinfo">
-        <div className="updtime">修改时间: 2023-10-06</div>
-      </div> */}
-      <div className="content">
-        <div className="bname">吕翔 Dugan</div>
-        <div className="dividingline" />
-        <img className="mimage" src="mine.jpg" alt="我的生活照" />
-        <div className="descmine">
-          <p>吕翔，男，目前在深圳前海进化论资产担任全栈开发工程师。</p>
-          <p>
-            联系方式 邮箱：840797783@qq.com 或 微信：Duganlx{' '}
-            <div
-              className="wechat"
-              onMouseEnter={() => {
-                console.log('enter');
-              }}
-              onMouseLeave={() => {
-                console.log('leave');
-              }}
-            >
-              <WechatOutlined />
-              <img className="wechat-qrcode" src="" alt="微信二维码" />
-            </div>
-          </p>
+      <div className="aview">
+        <div className="left">
+          <Authordesc />
+        </div>
+        <div className="right">
+          <Contentview />
         </div>
       </div>
     </div>
