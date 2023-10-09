@@ -29,8 +29,14 @@ const Contentview: React.FC = () => {
       <div className="item">
         <div className="title">🏆 Honors and Awards</div>
         <ul>
-          <li>xxx</li>
-          <li>xxx</li>
+          <li>
+            (2017-2021) Author won a total of seven university scholarships, including three special
+            scholarships, three first-class scholarships, and one second-class scholarship.
+          </li>
+          <li>
+            (2017-2020) Author won the honorary title of &quot;Excellent Student&quot; at the
+            university level for three consecutive years.
+          </li>
         </ul>
       </div>
       <div className="item">
