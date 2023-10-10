@@ -76,6 +76,11 @@ export default [
             name: 's2table',
             component: './demo/comp/s2table',
           },
+          {
+            path: '/demo/comp/label',
+            name: 'label',
+            component: './demo/comp/label',
+          },
         ],
       },
       {
