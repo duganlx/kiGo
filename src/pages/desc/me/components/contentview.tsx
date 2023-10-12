@@ -1,8 +1,11 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import Labelshow from './labelshow';
 
 const Contentview: React.FC = () => {
   const className = useEmotionCss(() => {
     return {
+      overflow: 'auto',
+
       '.item': {
         '.title': {
           fontSize: '1.4em',
@@ -20,12 +23,25 @@ const Contentview: React.FC = () => {
           color: 'black',
           textDecoration: 'underline',
         },
+
+        '.label-showcase': {
+          height: '300px',
+          backgroundColor: 'yellow',
+        },
       },
     };
   });
 
   return (
     <div className={className}>
+      <div className="item">
+        Hello, everyone. My name is Kelly. I am friendly and honest.I am good at English and maths.
+        I like surfing the internet,playing computer games, watching TV and traveling. I also like
+        playing table tennis and I am good at it ,too. I often play table tennis with my friends on
+        weekends. And I want to be a famous table tennis player when I grow up. What I like most is
+        to see the seagulls flying freely in the sky so I often go to the sea in summer. My
+        favourite colour is white because I think white is symbolize purity.{' '}
+      </div>
       <div className="item">
         <div className="title">🏆 Honors and Awards</div>
         <ul>
@@ -100,6 +116,13 @@ const Contentview: React.FC = () => {
           <li>xx</li>
           <li>xx</li>
         </ul>
+      </div>
+      <div className="item">
+        <div className="title">Labels</div>
+        <div className="label-showcase">
+          {' '}
+          <Labelshow />
+        </div>
       </div>
     </div>
   );

@@ -27,6 +27,7 @@ const Me: React.FC = () => {
         '.right': {
           // height: '100px',
           flex: '1 1 auto',
+          minWidth: '550px',
         },
       },
     };

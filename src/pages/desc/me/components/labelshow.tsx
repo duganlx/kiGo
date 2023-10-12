@@ -10,62 +10,11 @@ import {
   Runner,
   World,
 } from 'matter-js';
-import { useEffect, useRef, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { useEffect, useRef } from 'react';
 
-// https://brm.io/matter-js/
-// https://bruceau.com/about
-// https://reactcommunity.org/react-transition-group/css-transition
-// https://github.com/ArthurYung/react-my-website
-
-const LabelView: React.FC = () => {
+const Labelshow: React.FC = () => {
   const divRef = useRef<HTMLElement>();
-  const [inProp, setInProp] = useState(false);
-  const nodeRef = useRef(null);
   const engine = useRef(Engine.create());
-
-  const className = useEmotionCss(() => {
-    return {
-      margin: '40px 10vw',
-      width: '80vw',
-      // height: '300px',
-      // backgroundColor: 'yellow',
-
-      '.my-node-appear': {
-        color: 'blue',
-        fontWeight: 'bold',
-      },
-
-      '.my-node-enter': {
-        color: 'yellow',
-      },
-
-      '.my-node-enter-active': {
-        color: 'red',
-        fontSize: '32px',
-        transition: 'font-size 500ms',
-      },
-
-      '.my-node-enter-done': {
-        color: 'blue',
-        fontSize: '48px',
-      },
-
-      '.my-node-exit': {
-        color: 'yellow',
-      },
-
-      '.my-node-exit-active': {
-        fontSize: '64px',
-        transition: 'font-size 500ms',
-      },
-
-      '.my-node-exit-done': {
-        // color: 'red',
-        fontSize: '24px',
-      },
-    };
-  });
 
   useEffect(() => {
     if (!divRef.current) {
@@ -150,48 +99,18 @@ const LabelView: React.FC = () => {
     };
   }, []);
 
+  const className = useEmotionCss(() => {
+    return {
+      width: '100%',
+      height: '100%',
+    };
+  });
+
   return (
-    <>
-      <div className={className}>
-        <CSSTransition
-          ref={nodeRef}
-          in={inProp}
-          timeout={200}
-          classNames="my-node"
-          onEnter={() => {
-            console.log('enter');
-          }}
-          onEntering={() => {
-            console.log('entering');
-          }}
-          onEntered={() => {
-            console.log('entered');
-          }}
-          onExited={() => {
-            console.log('exit');
-            setInProp(false);
-          }}
-          onExit={() => {
-            console.log('exit');
-          }}
-          onExiting={() => {
-            console.log('exiting');
-          }}
-          // unmountOnExit
-          // mountOnEnter
-        >
-          <div ref={nodeRef}>{"I'll receive my-node-* classes"}</div>
-        </CSSTransition>
-        <button type="button" onClick={() => setInProp(!inProp)}>
-          Click to Enter
-        </button>
-      </div>
-      <div style={{ width: '700px', height: '300px', position: 'relative' }}>
-        <div ref={divRef as any} style={{ width: '100%', height: '100%', zIndex: 100 }} />
-        <div style={{ position: 'absolute', top: '30px', zIndex: 10 }}>xxx</div>
-      </div>
-    </>
+    <div className={className}>
+      <div ref={divRef as any} style={{ width: '100%', height: '100%' }} />
+    </div>
   );
 };
 
-export default LabelView;
+export default Labelshow;
