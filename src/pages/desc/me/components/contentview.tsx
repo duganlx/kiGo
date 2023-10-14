@@ -4,8 +4,6 @@ import Labelshow from './labelshow';
 const Contentview: React.FC = () => {
   const className = useEmotionCss(() => {
     return {
-      overflow: 'auto',
-
       '.item': {
         '.title': {
           fontSize: '1.4em',
@@ -26,7 +24,7 @@ const Contentview: React.FC = () => {
 
         '.label-showcase': {
           height: '300px',
-          backgroundColor: 'yellow',
+          // backgroundColor: 'yellow',
         },
       },
     };
@@ -118,9 +116,8 @@ const Contentview: React.FC = () => {
         </ul>
       </div>
       <div className="item">
-        <div className="title">Labels</div>
+        <div className="title">📇Labels</div>
         <div className="label-showcase">
-          {' '}
           <Labelshow />
         </div>
       </div>
