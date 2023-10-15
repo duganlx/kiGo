@@ -40,28 +40,29 @@ const Contentview: React.FC = () => {
         favourite colour is white because I think white is symbolize purity.{' '}
       </div>
       <div className="item">
-        <div className="title">🏆 Honors and Awards</div>
+        <div className="title">📇 Blogs</div>
         <ul>
-          <li>
-            (2017-2021) Author won a total of seven university scholarships, including three special
-            scholarships, three first-class scholarships, and one second-class scholarship.
-          </li>
-          <li>
-            (2017-2020) Author won the honorary title of &quot;Excellent Student&quot; at the
-            university level for three consecutive years.
-          </li>
+          <li>项目点亮 设计实现. 股票, 技术指标. 2023-10-11</li>
+          <li>GPT-4V(ision) System Card 论文研读. AI, 论文. 2023-10-11</li>
+          <li>...(more)</li>
         </ul>
       </div>
       <div className="item">
-        <div className="title">📖 Educations</div>
+        <div className="title">🎯 Projects</div>
+        <ul>
+          <li>xx</li>
+          <li>xx</li>
+        </ul>
+      </div>
+      <div className="item">
+        <div className="title">👔 Experiences</div>
         <ul>
           <li>
-            2021.09 - 2023.06. Master. Shanghai Maritime University. Software Engineering. GPA:
-            89/100
-          </li>
-          <li>
-            2017.09 - 2021.06. Bachelor. Beijing Institute Of Technology, Zhuhai. Computer Science
-            and Technology. GPA: 4.0/5.0
+            2023.06 - now.{' '}
+            <a href="http://www.jhlfund.com/about" target="_blank" rel="noopener noreferrer">
+              Evoluation Asset Management,Ltd
+            </a>
+            . Full-Stack Developer.
           </li>
         </ul>
       </div>
@@ -96,30 +97,87 @@ const Contentview: React.FC = () => {
         </ul>
       </div>
       <div className="item">
-        <div className="title">👔 Experiences</div>
+        <div className="title">📖 Educations</div>
         <ul>
           <li>
-            2023.06 - now.{' '}
-            <a href="http://www.jhlfund.com/about" target="_blank" rel="noopener noreferrer">
-              Evoluation Asset Management,Ltd
-            </a>
-            . Full-Stack Developer.
+            2021.09 - 2023.06. Master. Shanghai Maritime University. Software Engineering. GPA:
+            87/100. Rank: 29/181
+          </li>
+          <li>
+            2017.09 - 2021.06. Bachelor. Beijing Institute Of Technology, Zhuhai. Computer Science
+            and Technology. GPA: 91/100. Rank: 1/147
           </li>
         </ul>
       </div>
       <div className="item">
-        <div className="title">🎯 Projects</div>
+        <div className="title">🏆 Honors and Awards</div>
         <ul>
-          <li>xx</li>
-          <li>xx</li>
-        </ul>
-      </div>
-      <div className="item">
-        <div className="title">📇 Blogs</div>
-        <ul>
-          <li>项目点亮 设计实现. 股票, 技术指标. 2023-10-11</li>
-          <li>GPT-4V(ision) System Card 论文研读. AI, 论文. 2023-10-11</li>
-          <li>...(more)</li>
+          <li>2023. 上海市优秀毕业生</li>
+          <li>
+            2022. Received the National Scholarship for Master&apos;s Degree at Shanghai Maritime
+            University.
+          </li>
+          <li>
+            2022. Published a paper in the EURASIP Journal on Wireless Communications and Networking
+            titled &apos;
+            <a
+              href="https://jwcn-eurasipjournals.springeropen.com/articles/10.1186/s13638-022-02180-w"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Network Abnormal Traffic Detection Method Based on Fusion of Chord Similarity and
+              Multiple Loss Encoder
+            </a>
+            &apos;.
+          </li>
+          <li>
+            2021. Second Prize in the 18th China Graduate Mathematical Modeling Competition
+            &quot;Huawei Cup&quot;.
+          </li>
+          <li>2021. 优秀毕业生</li>
+          <li>
+            2021-2023. Served as the Propaganda Committee Member of the Party Branch of the CPC for
+            2021 professional master student of Shanghai Maritime University.
+          </li>
+          <li>
+            2017-2021. Received seven scholarships from Beijing University of Technology(Zhuhai)
+            including three special scholarships(Top 1%), three first-class scholarships(Top 5%),
+            and one second-class scholarship(Top 10%).
+          </li>
+          <li>
+            2017-2020. Received the honorary title of &quot;Excellent Student&quot; from Beijing
+            University of Technology(Zhuhai) for three consecutive years.
+          </li>
+          <li>
+            2020. Second Prize of the 12th National College Student Mathematics Competition
+            (Guangdong Provincial Competition).
+          </li>
+          <li>
+            2019. Second Prize in the Campus Selection Competition of the 9th ACM/ICPC Program
+            Design Competion of Beijing Institute of Technology, Zhuhai.
+          </li>
+          <li>
+            2019. Participated in the research and development of the school level college student
+            innovation and entrepreneurship training project &quot;Online Practice System Based on
+            WeChat Mini Programs&quot;. The project was successfully completed, obtaining two
+            computer software copyright registration certificates and publishing a paper in the
+            journal &quot; Computer Knowledge and Technology&quot;.
+          </li>
+          <li>
+            2018. Participated in the research and development of the provincial college student
+            innovation and entrepreneurship training project &quot;Smart Campus Face Recognition
+            System&quot;。 The project was successfully completed, obtaining a software copyright
+            registration certificate and publishing a paper in the journal &quot;Modern
+            Computer&quot;.
+          </li>
+          <li>
+            2017-2021. Served as the life committe member of Class 2 in Computer Science and
+            Technology.
+          </li>
+          <li>
+            2017. Third Prize of the 7th C Language Programming Challenge Cup at Beijing University
+            of Technology, Zhuhai.
+          </li>
         </ul>
       </div>
       {/* <div className="item">
