@@ -1,5 +1,4 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import Labelshow from './labelshow';
 
 const Contentview: React.FC = () => {
   const className = useEmotionCss(() => {
@@ -116,11 +115,19 @@ const Contentview: React.FC = () => {
         </ul>
       </div>
       <div className="item">
+        <div className="title">📇 Blogs</div>
+        <ul>
+          <li>项目点亮 设计实现. 股票, 技术指标. 2023-10-11</li>
+          <li>GPT-4V(ision) System Card 论文研读. AI, 论文. 2023-10-11</li>
+          <li>...(more)</li>
+        </ul>
+      </div>
+      {/* <div className="item">
         <div className="title">📇Labels</div>
         <div className="label-showcase">
           <Labelshow />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

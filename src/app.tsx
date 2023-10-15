@@ -3,7 +3,6 @@ import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
-import { AboutMe } from './components';
 import PopoverMenuView from './components/PopoverMenu';
 import { LayoutContentView } from './layoutContent';
 import { errorConfig } from './requestErrorConfig';
@@ -55,7 +54,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
-    actionsRender: () => [<AboutMe key="aboutMe" />],
+    actionsRender: () => [],
     // avatarProps: {
     //   src: initialState?.currentUser?.avatar,
     //   title: <AvatarName />,
@@ -77,7 +76,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     stylish: {
       header: (token) => {
         return {
-          background: '#001529',
+          // background: '#001529',
           height: '36px',
 
           '.ant-pro-top-nav-header-menu > *': {
@@ -92,6 +91,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
               '&:hover': { backgroundColor: token.colorPrimary },
             },
           },
+
+          '.ant-pro-top-nav-header-main > .ant-pro-top-nav-header-main-left': {
+            display: 'none',
+          },
         };
       },
     },
@@ -101,7 +104,20 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
         return null;
       }
 
-      return <PopoverMenuView menuData={menuData} />;
+      return (
+        <div style={{ display: 'flex', fontFamily: '"Trebuchet MS",Helvetica,sans-serif' }}>
+          <div
+            style={{ fontWeight: '700', color: '#7a8288', marginRight: '12px', cursor: 'pointer' }}
+            onClick={() => {
+              const path = '/me';
+              history.push(path);
+            }}
+          >
+            Homepage
+          </div>
+          <PopoverMenuView menuData={menuData} />
+        </div>
+      );
     },
     // menuHeaderRender: undefined,
     // 自定义 403 页面

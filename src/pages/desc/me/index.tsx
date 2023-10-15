@@ -26,49 +26,55 @@ const Me: React.FC = () => {
   const className = useEmotionCss(() => {
     return {
       width: '100vw',
-      backgroundColor: '#f0f0f0',
-      position: 'relative',
       height: 'calc(100vh - 40px)',
-      display: 'flex',
-      flexDirection: 'row',
+      backgroundColor: '#f0f0f0',
+      overflow: 'auto',
 
-      '.left': {
-        width: '230px',
-        padding: '10px 15px 5px',
-        marginLeft: '8vw',
+      '::-webkit-scrollbar': {
         backgroundColor: 'white',
+        width: '5px',
+      },
+
+      '::-webkit-scrollbar-thumb': {
+        borderRadius: '5px',
+        backgroundColor: '#d9d9d9',
       },
 
       '.scrollview': {
-        height: '100%',
-        width: 'calc(100% - 230px - 8vw)',
-        overflow: 'auto',
-        backgroundColor: '#f0f0f0',
-        '::-webkit-scrollbar': {
-          backgroundColor: 'white',
-          width: '5px',
-        },
+        marginLeft: '8vw',
+        marginRight: '7vw',
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'row',
+        position: 'relative',
+      },
 
-        '::-webkit-scrollbar-thumb': {
-          borderRadius: '5px',
-          backgroundColor: '#d9d9d9',
+      '.left': {
+        width: '230px',
+
+        '.fixed': {
+          width: '230px',
+          padding: '10px 15px 5px',
+          top: 0,
+          position: 'sticky',
         },
       },
 
       '.right': {
+        width: 'calc(100% - 230px)',
         padding: '15px 5px 3px 30px',
-        marginRight: '7vw',
-        backgroundColor: 'white',
       },
     };
   });
 
   return (
     <div className={className}>
-      <div className="left">
-        <Authordesc />
-      </div>
       <div className="scrollview">
+        <div className="left">
+          <div className="fixed">
+            <Authordesc />
+          </div>
+        </div>
         <div className="right">
           <Contentview />
         </div>

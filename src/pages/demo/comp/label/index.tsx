@@ -137,9 +137,10 @@ const LabelView: React.FC = () => {
     ]);
 
     Render.run(render);
-    Runner.run(engine.current);
+    const runner = Runner.run(engine.current);
 
     return () => {
+      Runner.stop(runner);
       Render.stop(render);
       // World.clear(engine.current.world)
       Engine.clear(engine.current);
