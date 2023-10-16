@@ -1,8 +1,9 @@
+import { CatalogItem, GetBlogsCatalog } from '@/services/github';
 import { getUuidShort } from '@/services/utils';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { useModel } from '@umijs/max';
 import { debounce } from 'lodash';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Authordesc from './components/authordesc';
 import Contentview from './components/contentview';
 
@@ -10,6 +11,8 @@ const Me: React.FC = () => {
   const { setLayoutchgSign } = useModel('desc.me.model', (m: any) => ({
     setLayoutchgSign: m.udLayoutchgSign,
   }));
+
+  const [catalog, setCatalog] = useState<CatalogItem[]>([]);
 
   useEffect(() => {
     const debounceRender = debounce(function () {
@@ -21,6 +24,13 @@ const Me: React.FC = () => {
     });
 
     setLayoutchgSign(getUuidShort(64));
+  }, []);
+
+  useEffect(() => {
+    GetBlogsCatalog().then((data) => {
+      const procItems = (data ?? []).reverse().slice(0, 5);
+      setCatalog(procItems);
+    });
   }, []);
 
   const className = useEmotionCss(() => {
@@ -41,8 +51,8 @@ const Me: React.FC = () => {
       },
 
       '.scrollview': {
-        marginLeft: '8vw',
-        marginRight: '7vw',
+        marginLeft: '15vw',
+        marginRight: '15vw',
         backgroundColor: 'white',
         display: 'flex',
         flexDirection: 'row',
@@ -76,7 +86,7 @@ const Me: React.FC = () => {
           </div>
         </div>
         <div className="right">
-          <Contentview />
+          <Contentview catalog={catalog} />
         </div>
       </div>
     </div>

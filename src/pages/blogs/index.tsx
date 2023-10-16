@@ -4,13 +4,13 @@ import { useModel } from '@umijs/max';
 import { message } from 'antd';
 import dayjs from 'dayjs';
 // import isBetween from 'dayjs/plugin/isBetween';
+import { CatalogItem } from '@/services/github';
 import { debounce } from 'lodash';
 import { Octokit } from 'octokit';
 import { useEffect, useState } from 'react';
 import ContentView from './components/contentView';
 import ListView from './components/listView';
 import SearchView from './components/searchView';
-import { CatalogItem } from './model';
 
 // dayjs.extend(isBetween);
 

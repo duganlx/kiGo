@@ -1,8 +1,19 @@
+import { CatalogItem } from '@/services/github';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 
-const Contentview: React.FC = () => {
+interface ContentviewProps {
+  catalog: CatalogItem[];
+}
+
+const Contentview: React.FC<ContentviewProps> = (props) => {
+  const { catalog } = props;
+  console.log(catalog);
+
   const className = useEmotionCss(() => {
     return {
+      lineHeight: '1.5',
+      fontSize: '15px',
+
       '.item': {
         '.title': {
           fontSize: '1.4em',
@@ -37,28 +48,75 @@ const Contentview: React.FC = () => {
         playing table tennis and I am good at it ,too. I often play table tennis with my friends on
         weekends. And I want to be a famous table tennis player when I grow up. What I like most is
         to see the seagulls flying freely in the sky so I often go to the sea in summer. My
-        favourite colour is white because I think white is symbolize purity.{' '}
+        favourite colour is white because I think white is symbolize purity.&nbsp;
       </div>
       <div className="item">
         <div className="title">📇 Blogs</div>
         <ul>
-          <li>项目点亮 设计实现. 股票, 技术指标. 2023-10-11</li>
-          <li>GPT-4V(ision) System Card 论文研读. AI, 论文. 2023-10-11</li>
-          <li>...(more)</li>
+          {catalog.map((item) => (
+            <li key={item.id}>
+              <a href={`/feel/blogs?blogId=${item.id}`} target="_blank" rel="noopener noreferrer">
+                {item.title}
+              </a>
+              .&nbsp;
+              {item.updateTime}.&nbsp;
+              {item.tags.map((tag) => (
+                <>
+                  <span
+                    key={tag}
+                    style={{
+                      // display: 'inline-block',
+                      backgroundColor: '#fff7e6',
+                      color: '#d46b08',
+                      border: '1px solid #ffd591',
+                      borderRadius: '4px',
+                      padding: '0 4px',
+                      // fontSize: '12px',
+                      // lineHeight: '1',
+                    }}
+                  >
+                    {tag}
+                  </span>
+                  &nbsp;
+                </>
+              ))}
+            </li>
+          ))}
+          <li>
+            <a href={`/feel/blogs`} target="_blank" rel="noopener noreferrer">
+              ...(more)
+            </a>
+          </li>
         </ul>
       </div>
       <div className="item">
         <div className="title">🎯 Projects</div>
         <ul>
-          <li>xx</li>
-          <li>xx</li>
+          <li>
+            kiGo. A front-end application developed using the ant design pro template is the one you
+            are currently using.&nbsp;
+            <a href="https://github.com/duganlx/kiGo" target="_blank" rel="noopener noreferrer">
+              repository
+            </a>
+          </li>
+          <li>
+            xubuntu-docker. This is a visual ubuntu development environment used to create and
+            initialize in Docker.&nbsp;
+            <a
+              href="https://github.com/duganlx/xubuntu-docker"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              repository
+            </a>
+          </li>
         </ul>
       </div>
       <div className="item">
         <div className="title">👔 Experiences</div>
         <ul>
           <li>
-            2023.06 - now.{' '}
+            2023.06 - now.&nbsp;
             <a href="http://www.jhlfund.com/about" target="_blank" rel="noopener noreferrer">
               Evoluation Asset Management,Ltd
             </a>
@@ -70,21 +128,21 @@ const Contentview: React.FC = () => {
         <div className="title">💻 Internships</div>
         <ul>
           <li>
-            2022.08 - 2023.04.{' '}
+            2022.08 - 2023.04.&nbsp;
             <a href="http://www.jhlfund.com/about" target="_blank" rel="noopener noreferrer">
               Evoluation Asset Management,Ltd
             </a>
             . Full-Stack Developer Intern.
           </li>
           <li>
-            2022.04 - 2022.07.{' '}
+            2022.04 - 2022.07.&nbsp;
             <a href="http://datauseful.com/AboutUs-2/" target="_blank" rel="noopener noreferrer">
               Shanghai Yousifu Information Technology Co.,Ltd
             </a>
             . Go Developer Intern.
           </li>
           <li>
-            2021.03 - 2021.07.{' '}
+            2021.03 - 2021.07.&nbsp;
             <a
               href="http://www.jore-tech.com/frontAboutUs.html"
               target="_blank"
@@ -112,7 +170,10 @@ const Contentview: React.FC = () => {
       <div className="item">
         <div className="title">🏆 Honors and Awards</div>
         <ul>
-          <li>2023. 上海市优秀毕业生</li>
+          <li>
+            2023. Honorary Title for Outstanding Graduates of Shanghai Ordinary Higher Education
+            Institutions in 2023.
+          </li>
           <li>
             2022. Received the National Scholarship for Master&apos;s Degree at Shanghai Maritime
             University.
@@ -134,7 +195,10 @@ const Contentview: React.FC = () => {
             2021. Second Prize in the 18th China Graduate Mathematical Modeling Competition
             &quot;Huawei Cup&quot;.
           </li>
-          <li>2021. 优秀毕业生</li>
+          <li>
+            2021. Honorary Title for Outstanding Graduates of Beijing Institute of
+            Technology(Zhuhai) in 2021.
+          </li>
           <li>
             2021-2023. Served as the Propaganda Committee Member of the Party Branch of the CPC for
             2021 professional master student of Shanghai Maritime University.
@@ -145,7 +209,7 @@ const Contentview: React.FC = () => {
             and one second-class scholarship(Top 10%).
           </li>
           <li>
-            2017-2020. Received the honorary title of &quot;Excellent Student&quot; from Beijing
+            2017-2020. Received the honorary title of &quot;Outstanding Student&quot; from Beijing
             University of Technology(Zhuhai) for three consecutive years.
           </li>
           <li>
