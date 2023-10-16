@@ -1,6 +1,6 @@
 import { LayoutCfg } from '@/components/Markdown';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { useModel } from '@umijs/max';
+import { useLocation, useModel } from '@umijs/max';
 import { message } from 'antd';
 import dayjs from 'dayjs';
 // import isBetween from 'dayjs/plugin/isBetween';
@@ -90,6 +90,29 @@ function procContent(content: string, info: CatalogItem) {
   return ncontent;
 }
 
+function generateUrlParams(search: string) {
+  const query: Record<string, any> = {};
+
+  if (search.split('?').length === 1) {
+    return query;
+  }
+
+  search
+    .split('?')[1]
+    .split('&')
+    .forEach((item) => {
+      const [key, value] = item.split('=');
+
+      if (value.indexOf(',') === -1) {
+        query[key] = decodeURIComponent(value);
+      } else {
+        query[key] = value.split(',').map((v) => decodeURIComponent(v));
+      }
+    });
+
+  return query;
+}
+
 const BlogsView: React.FC = () => {
   const octokit = new Octokit({});
 
@@ -106,6 +129,9 @@ const BlogsView: React.FC = () => {
   const [content, setContent] = useState<string>('');
   const [loadingcontent, setLoadingcontent] = useState<boolean>(false);
   const [contentlayout, setContentlayout] = useState<LayoutCfg | undefined>(undefined);
+
+  const { search } = useLocation();
+  const query = generateUrlParams(search);
 
   const { accatalog, setAccatalog } = useModel('blogs.model', (m: any) => ({
     accatalog: m.accatalog as CatalogItem,
@@ -191,6 +217,15 @@ const BlogsView: React.FC = () => {
         setOldestDate(od);
         setLatestDate(ld);
         setCatalog(procItems);
+
+        if (query.blogId !== undefined) {
+          const aimCatalogItems = procItems.filter((item) => item.id === +query.blogId);
+          if (aimCatalogItems.length > 0) {
+            setAccatalog(aimCatalogItems[0]);
+            return;
+          }
+          message.info(`blog[id=${query.blogId}] is not exist.`);
+        }
         if (procItems.length > 0) {
           const lastindex = procItems.length - 1;
           setAccatalog(procItems[lastindex]);

@@ -148,7 +148,7 @@ export default defineConfig({
       projectName: 'swagger',
     },
   ],
-  links: [{ rel: 'icon', href: '/icons/K.svg', type: 'image/x-icon' }],
+  links: [{ rel: 'icon', href: '/icons/loop.svg', type: 'image/png' }],
   mfsu: {
     strategy: 'normal',
   },

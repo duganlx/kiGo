@@ -13,51 +13,46 @@
 export default [
   {
     path: '/',
-    name: '待客室',
+    name: 'Welcome',
     icon: 'CrownOutlined',
     routes: [
       {
-        name: 'INTRODUCTION',
+        name: 'About Me',
         path: '/',
         routes: [
+          // {
+          //   path: '/',
+          //   redirect: '/me',
+          // },
           {
-            path: '/welcome',
-            redirect: '/',
+            name: 'Dugan (吕翔) - Homepage',
+            path: '/',
+            component: './desc/me',
           },
           {
-            path: '/',
+            path: '/me1',
             name: 'Welcome',
             component: './desc/welcome',
           },
-          // {
-          //   path: '/home',
-          //   name: '首页',
-          //   component: './desc/home',
-          // },
           {
-            name: 'About Me',
-            path: '/me',
-            component: './desc/me',
-          },
-        ],
-      },
-      {
-        name: '见闻',
-        path: '/feel',
-        routes: [
-          {
-            path: '/feel/blogs',
-            name: 'Blogs',
+            path: '/blogs',
+            name: 'Dugan (吕翔) - Blogs',
             component: './blogs',
             hideInBreadcrumb: true,
           },
         ],
       },
+      // {
+      //   name: '见闻',
+      //   path: '/feel',
+      //   routes: [
+      //   ],
+      // },
     ],
   },
   {
     path: '/demo',
-    name: '实验室',
+    name: 'Trial',
     icon: 'ExperimentOutlined',
     hideInBreadcrumb: true,
     routes: [

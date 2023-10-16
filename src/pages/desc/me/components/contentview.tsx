@@ -7,7 +7,6 @@ interface ContentviewProps {
 
 const Contentview: React.FC<ContentviewProps> = (props) => {
   const { catalog } = props;
-  console.log(catalog);
 
   const className = useEmotionCss(() => {
     return {
@@ -55,9 +54,7 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
         <ul>
           {catalog.map((item) => (
             <li key={item.id}>
-              <a href={`/feel/blogs?blogId=${item.id}`} target="_blank" rel="noopener noreferrer">
-                {item.title}
-              </a>
+              <a href={`/feel/blogs?blogId=${item.id}`}>{item.title}</a>
               .&nbsp;
               {item.updateTime}.&nbsp;
               {item.tags.map((tag) => (
@@ -83,9 +80,7 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
             </li>
           ))}
           <li>
-            <a href={`/feel/blogs`} target="_blank" rel="noopener noreferrer">
-              ...(more)
-            </a>
+            <a href={`/feel/blogs`}>...(more)</a>
           </li>
         </ul>
       </div>

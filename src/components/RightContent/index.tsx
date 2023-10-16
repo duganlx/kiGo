@@ -25,7 +25,7 @@ export const AboutMe = () => {
     <div
       style={{ color: 'white', fontSize: '18px' }}
       onClick={() => {
-        const path = '/me';
+        const path = '/';
         history.push(path);
       }}
     >

@@ -109,7 +109,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
           <div
             style={{ fontWeight: '700', color: '#7a8288', marginRight: '12px', cursor: 'pointer' }}
             onClick={() => {
-              const path = '/me';
+              const path = '/';
               history.push(path);
             }}
           >

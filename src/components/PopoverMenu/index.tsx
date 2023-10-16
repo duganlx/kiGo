@@ -101,7 +101,9 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
                             setOpen(false);
                           }}
                         >
-                          {subItem.name}
+                          {subItem.name.indexOf('Dugan (吕翔) - ') === -1
+                            ? subItem.name
+                            : subItem.name.split(' - ')[1]}
                         </Link>
                       )}
                     </div>
