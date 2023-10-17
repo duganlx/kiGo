@@ -14,7 +14,7 @@ const EditorModeView: React.FC<EditorModeViewProps> = () => {
   const editorRef = useRef<HTMLDivElement>(null);
 
   const { realtimeList, setRealtimeList, setCurComponent, setCanvasStyle } = useModel(
-    'demo.dnd.visualDragDemo.model',
+    'it.dnd.visualDragDemo.model',
     (model) => ({
       // curComponent: model.curComponent,
       realtimeList: model.realtimeList,

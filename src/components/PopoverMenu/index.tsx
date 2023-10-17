@@ -12,10 +12,58 @@ export type PopoverMenuViewProps = {
   menuData?: MenuDataItem[]; // 本地配置的路由信息
 };
 
+const renderIcon = (icon?: string | React.ReactNode) => {
+  if (!icon) {
+    return null;
+  }
+
+  if (typeof icon === 'string') {
+    return <img src={icon} alt="" />;
+  }
+  return icon;
+};
+
+// subItem.name.indexOf('Dugan (吕翔) - ') === -1
+// ? subItem.name
+// : subItem.name.split(' - ')[1]
+
+function getShowName(name: string) {
+  const index = name.indexOf(' - Dugan (吕翔)');
+
+  if (index === -1) {
+    return name;
+  }
+
+  return name.split(' - ')[0];
+}
+
 const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
   const { menuData } = props;
 
-  const validRouters = [...(menuData || [])];
+  const validRouters = [...(menuData || [])]
+    .filter((item) => item.path !== '/')
+    .map((item) => {
+      // name 命名有两种形式 xxx 或 xxx - Dugan (吕翔)
+      const newitem = { ...item };
+
+      // second level
+      if (item.children && item.children.length > 0) {
+        newitem.children = item.children.map((ichildren) => {
+          const newchildren = { ...ichildren };
+
+          // third level
+          if (ichildren.children && ichildren.children.length > 0) {
+            newchildren.children = ichildren.children.map((igrandson) => {
+              return { ...igrandson, name: getShowName(igrandson.name ?? '') };
+            });
+          }
+
+          return { ...newchildren, name: getShowName(ichildren.name ?? '') };
+        });
+      }
+
+      return { ...newitem, name: getShowName(item.name ?? '') };
+    });
   const validMap: Record<string, any> = {};
   validRouters.forEach((item) => {
     validMap[item.name!] = item;
@@ -63,24 +111,13 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
     };
   });
 
-  const renderIcon = (icon?: string | React.ReactNode) => {
-    if (!icon) {
-      return null;
-    }
-
-    if (typeof icon === 'string') {
-      return <img src={icon} alt="" />;
-    }
-    return icon;
-  };
-
   function renderRight(vMap: Record<string, MenuDataItem>, atMenu: string) {
     const routers = vMap[atMenu]?.children || [vMap[atMenu]];
     return (
       <div className="second-menu-wrap">
         <div className="second-menu-container">
           {routers.map((item) => {
-            if (item.hideInMenu || !item.name || !item.path) return null;
+            if (item.hideInMenu || !item.name || !item.path || item.path === '/') return null;
             return (
               <div key={item.path} className="second-menu-item">
                 {/* 二级菜单头 */}
@@ -101,9 +138,7 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
                             setOpen(false);
                           }}
                         >
-                          {subItem.name.indexOf('Dugan (吕翔) - ') === -1
-                            ? subItem.name
-                            : subItem.name.split(' - ')[1]}
+                          {subItem.name}
                         </Link>
                       )}
                     </div>
@@ -113,12 +148,6 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
             );
           })}
         </div>
-        {/* <div className="second-menu-right">
-            <div className="second-menu-right-wrap">
-              <div className="second-menu-right-item-title">热门推荐</div>
-              <div className="second-menu-right-item-content" />
-            </div>
-          </div> */}
       </div>
     );
   }
@@ -138,7 +167,9 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
                 <li className={item.name === activeTopMenu ? 'active' : ''}>
                   <div className={'title'}>
                     {renderIcon(item.icon)}
-                    {item.name}
+                    {(item.name ?? '').indexOf('Dugan (吕翔) - ') === -1
+                      ? item.name
+                      : item.name!.split(' - ')[1]}
                     <div className="menu-border" />
                   </div>
                 </li>

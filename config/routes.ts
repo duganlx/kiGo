@@ -13,95 +13,87 @@
 export default [
   {
     path: '/',
-    name: 'Welcome',
-    icon: 'CrownOutlined',
-    routes: [
-      {
-        name: 'About Me',
-        path: '/',
-        routes: [
-          // {
-          //   path: '/',
-          //   redirect: '/me',
-          // },
-          {
-            name: 'Dugan (吕翔) - Homepage',
-            path: '/',
-            component: './desc/me',
-          },
-          {
-            path: '/me1',
-            name: 'Welcome',
-            component: './desc/welcome',
-          },
-          {
-            path: '/blogs',
-            name: 'Dugan (吕翔) - Blogs',
-            component: './blogs',
-            hideInBreadcrumb: true,
-          },
-        ],
-      },
-      // {
-      //   name: '见闻',
-      //   path: '/feel',
-      //   routes: [
-      //   ],
-      // },
-    ],
+    name: 'Homepage - Dugan (吕翔)',
+    component: './me',
   },
   {
-    path: '/demo',
-    name: 'Trial',
-    icon: 'ExperimentOutlined',
+    path: '/wc',
+    name: 'Travelogue',
+    icon: 'ReconciliationOutlined',
     hideInBreadcrumb: true,
     routes: [
       {
-        name: '组件',
-        path: '/demo/comp',
+        name: 'Blogs - Dugan (吕翔)',
+        path: '/wc/blogs',
+        component: './travelogue/blogs',
+        hideInBreadcrumb: true,
+      },
+      {
+        name: 'Images - Dugan (吕翔)',
+        path: '/wc/',
+        component: './travelogue/images',
+        hideInBreadcrumb: true,
+      },
+    ],
+  },
+  {
+    path: '/it',
+    name: 'IT',
+    icon: 'CodeOutlined',
+    hideInBreadcrumb: true,
+    routes: [
+      {
+        name: 'Comp',
+        path: '/it/comp',
         routes: [
           {
-            path: '/demo/comp/drawing',
-            name: '绘图',
-            component: './demo/comp/drawing',
+            path: '/it/comp/drawing',
+            name: 'Drawing',
+            component: './it/comp/drawing',
             hideInBreadcrumb: true,
           },
           {
-            path: '/demo/comp/s2table',
-            name: 's2table',
-            component: './demo/comp/s2table',
+            path: '/it/comp/s2table',
+            name: 'S2table',
+            component: './it/comp/s2table',
           },
           {
-            path: '/demo/comp/label',
-            name: 'label',
-            component: './demo/comp/label',
+            path: '/it/comp/label',
+            name: 'Label',
+            component: './it/comp/label',
           },
         ],
       },
       {
-        name: '拖拽',
-        path: '/demo/dnd',
+        name: 'DND',
+        path: '/it/dnd',
         hideInBreadcrumb: true,
         routes: [
           {
-            path: '/demo/dnd/reactdnd',
-            name: 'react DnD',
-            component: './demo/dnd/reactdndDemo',
+            path: '/it/dnd/reactdnd',
+            name: 'React DnD',
+            component: './it/dnd/reactdndDemo',
           },
           {
-            path: '/demo/dnd/visualdrag',
-            name: 'visual drag demo',
-            component: './demo/dnd/visualDragDemo',
+            path: '/it/dnd/visualdrag',
+            name: 'Visual Drag Demo',
+            component: './it/dnd/visualDragDemo',
           },
           {
-            path: '/demo/dnd/appeditorreactdndts',
-            name: 'app editor react dnd ts',
-            component: './demo/dnd/appEditorReactDndDemo',
+            path: '/it/dnd/appeditorreactdndts',
+            name: 'App editor react dnd ts',
+            component: './it/dnd/appEditorReactDndDemo',
           },
         ],
       },
     ],
   },
+  // {
+  //   path: '/ml',
+  //   name: 'ML',
+  //   hideInBreadcrumb: true,
+  //   routes: []
+  // },
   {
     path: '*',
     layout: false,

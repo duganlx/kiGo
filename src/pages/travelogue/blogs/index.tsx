@@ -1,18 +1,15 @@
 import { LayoutCfg } from '@/components/Markdown';
+import { CatalogItem } from '@/services/github';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { useLocation, useModel } from '@umijs/max';
 import { message } from 'antd';
 import dayjs from 'dayjs';
-// import isBetween from 'dayjs/plugin/isBetween';
-import { CatalogItem } from '@/services/github';
 import { debounce } from 'lodash';
 import { Octokit } from 'octokit';
 import { useEffect, useState } from 'react';
 import ContentView from './components/contentView';
 import ListView from './components/listView';
 import SearchView from './components/searchView';
-
-// dayjs.extend(isBetween);
 
 const navpartWidth: number = 350;
 
@@ -133,7 +130,7 @@ const BlogsView: React.FC = () => {
   const { search } = useLocation();
   const query = generateUrlParams(search);
 
-  const { accatalog, setAccatalog } = useModel('blogs.model', (m: any) => ({
+  const { accatalog, setAccatalog } = useModel('travelogue.blogs.model', (m: any) => ({
     accatalog: m.accatalog as CatalogItem,
     setAccatalog: m.udAccatalog,
   }));

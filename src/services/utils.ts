@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
-import type { UserItem } from './eam-api/uc/userManager';
+// import type { UserItem } from './eam-api/uc/userManager';
 
-declare type UserInfo = UserItem;
+// declare type UserInfo = UserItem;
 
 const avatarColors = [
   '#5F9EA0',
@@ -59,18 +59,18 @@ export const setUserInfoByStr = (userinfo: string) => {
   return localStorage.setItem('userinfo', userinfo);
 };
 
-export const getUserInfo = () => {
-  const userInfoStr = localStorage.getItem('userinfo');
-  return JSON.parse(`${userInfoStr || '{}'}`) as UserInfo;
-};
+// export const getUserInfo = () => {
+//   const userInfoStr = localStorage.getItem('userinfo');
+//   return JSON.parse(`${userInfoStr || '{}'}`) as UserInfo;
+// };
 
 export const getUserName = () => {
   return localStorage.getItem('user_name');
 };
 
-export const setUserName = (user: UserInfo) => {
-  return localStorage.setItem('user_name', `${user.nickName} (${user.userName})`);
-};
+// export const setUserName = (user: UserInfo) => {
+//   return localStorage.setItem('user_name', `${user.nickName} (${user.userName})`);
+// };
 
 export const clearUserInfo = () => {
   localStorage.removeItem('userinfo');

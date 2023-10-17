@@ -45,7 +45,7 @@ const Labelshow: React.FC = () => {
   const divRef = useRef<HTMLElement>();
   const engine = useRef(Engine.create());
 
-  const { layoutchgSign } = useModel('desc.me.model', (m: any) => ({
+  const { layoutchgSign } = useModel('me.model', (m: any) => ({
     layoutchgSign: m.layoutchgSign,
   }));
 

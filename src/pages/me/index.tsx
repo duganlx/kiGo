@@ -8,7 +8,7 @@ import Authordesc from './components/authordesc';
 import Contentview from './components/contentview';
 
 const Me: React.FC = () => {
-  const { setLayoutchgSign } = useModel('desc.me.model', (m: any) => ({
+  const { setLayoutchgSign } = useModel('me.model', (m: any) => ({
     setLayoutchgSign: m.udLayoutchgSign,
   }));
 

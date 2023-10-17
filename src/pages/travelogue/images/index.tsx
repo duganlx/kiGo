@@ -1,5 +1,5 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { history } from '@umijs/max';
+import { history, useLocation } from '@umijs/max';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
@@ -8,12 +8,13 @@ import style from './index.less';
 const Welcome: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [showRocketTip, setShowRocketTip] = useState<boolean>(false);
+  const { pathname } = useLocation();
 
   const className = useEmotionCss(() => {
     return {
       width: '100vw',
       height: 'calc(100vh - 36px)',
-      background: `url(engineer.png)`,
+      background: `url('${window.location.href.split(pathname)[0]}/engineer.png')`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: '0% 85%',
@@ -106,7 +107,7 @@ const Welcome: React.FC = () => {
       <div
         className="bottom"
         onClick={() => {
-          const homePath = '/feel/blogs';
+          const homePath = '/';
           history.push(homePath);
         }}
         onMouseEnter={() => {
@@ -118,7 +119,7 @@ const Welcome: React.FC = () => {
       >
         <div className={classNames(style.enter, 'enter')}>
           <div className="rocket">&#x1F680;</div>
-          <div className="rocket-label">博客</div>
+          <div className="rocket-label">About Me</div>
         </div>
       </div>
     </div>

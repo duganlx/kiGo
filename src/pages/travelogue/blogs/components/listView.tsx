@@ -20,7 +20,7 @@ const AcardView: React.FC<AcardViewProps> = (props) => {
   const { item } = props;
   const { title, tags, updateTime } = item;
 
-  const { accatalog, setAccatalog } = useModel('blogs.model', (m: any) => ({
+  const { accatalog, setAccatalog } = useModel('travelogue.blogs.model', (m: any) => ({
     accatalog: m.accatalog,
     setAccatalog: m.udAccatalog,
   }));
