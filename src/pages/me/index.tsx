@@ -65,14 +65,14 @@ const Me: React.FC = () => {
         '.fixed': {
           width: '230px',
           padding: '10px 15px 5px',
-          top: 0,
+          top: '15px',
           position: 'sticky',
         },
       },
 
       '.right': {
         width: 'calc(100% - 230px)',
-        padding: '15px 5px 3px 30px',
+        padding: '15px 5px 3px 10px',
       },
     };
   });

@@ -33,6 +33,7 @@ const Authordesc: React.FC = () => {
 
       '.author-url': {
         ul: {
+          marginTop: '15px',
           paddingLeft: '5px',
           li: {
             verticalAlign: 'middle',
@@ -60,10 +61,7 @@ const Authordesc: React.FC = () => {
       <div className="avatar" />
       <div className="authorName">Dugan (吕翔)</div>
       <div className="authorBio">
-        <p>前海进化论资产-全栈开发工程师</p>
-        <p>
-          负责系统中台的前端网页设计开发和后端服务器的开发维护工作。另外，凭兴趣在研究金融相关知识。
-        </p>
+        <p>Focusing on full stack development, quantitative development, and AI.</p>
       </div>
       <div className="author-url">
         <ul>

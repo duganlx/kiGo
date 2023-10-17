@@ -64,6 +64,7 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
 
       return { ...newitem, name: getShowName(item.name ?? '') };
     });
+
   const validMap: Record<string, any> = {};
   validRouters.forEach((item) => {
     validMap[item.name!] = item;
@@ -199,7 +200,10 @@ const PopoverMenuView: React.FC<PopoverMenuViewProps> = (props) => {
           setOpen(openIn);
         }}
       >
-        <span className={'popover-menu-icon'} style={{ color: '#8c8c8c' }}>
+        <span
+          className={classNames('popover-menu-icon', style.popoverMenuIcon)}
+          style={{ color: 'rgb(122, 130, 136)' }}
+        >
           <AppstoreOutlined />
         </span>
       </Popover>

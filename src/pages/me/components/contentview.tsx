@@ -13,6 +13,7 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
     return {
       lineHeight: '1.5',
       fontSize: '15px',
+      paddingRight: '10px',
 
       '.item': {
         '.title': {
@@ -28,7 +29,7 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
         },
 
         a: {
-          color: 'black',
+          color: '#224b8d',
           textDecoration: 'underline',
         },
 
@@ -43,12 +44,63 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
   return (
     <div className={className}>
       <div className="item">
-        Hello, everyone. My name is Kelly. I am friendly and honest.I am good at English and maths.
-        I like surfing the internet,playing computer games, watching TV and traveling. I also like
-        playing table tennis and I am good at it ,too. I often play table tennis with my friends on
-        weekends. And I want to be a famous table tennis player when I grow up. What I like most is
-        to see the seagulls flying freely in the sky so I often go to the sea in summer. My
-        favourite colour is white because I think white is symbolize purity.&nbsp;
+        <p>
+          I am currently working as a full stack developer in{' '}
+          <a href="http://www.jhlfund.com/about" target="_blank" rel="noopener noreferrer">
+            Evoluation Asset Management,Ltd
+          </a>
+          . in Shenzhen, China. I am responsible for the construction and maintenance of QuantWeb,
+          the company&apos;s system center, so as to better support the work of colleagues in other
+          business departments of the company. The specifics of the work can be abstracted into four
+          areas, specifically:
+          <ol>
+            <li>
+              (Analysis) When a colleague from another department raises a new requirement, I need
+              to communicate with that colleague to understand his claim and the desired effect.
+              Next, I need to assess the value and urgency of the requirement.
+            </li>
+            <li>
+              (Design) I need to go for prototype drawings based on the requirements and check with
+              that colleague for functionality and style.
+            </li>
+            <li>
+              (Development) Utilizing the expertise I have, I choose the appropriate way to code the
+              functionality for implementation. After self-testing for accuracy, deployed the
+              program to the test environment and notified the test engineers to validate the
+              developed functionality.
+            </li>
+            <li>
+              (Testing) Analyze and deal with the problems identified. Once all issues have been
+              addressed, the program will be deployed to the production environment and made
+              available to business colleagues to use and receive feedback.
+            </li>
+          </ol>
+        </p>
+        <p>
+          My professional skills include Front-end development (React + Typescript), Back-end
+          development (Kratos + Golang), Bash, Python, SQL. my English level is up to CET6.
+        </p>
+        <p>
+          I did my undergraduate study at Beijing Institute of Technology (Zhuhai) and postgraduate
+          study at Shanghai Maritime University under the supervision of Prof.{' '}
+          <a
+            href="https://cie.shmtu.edu.cn/2020/1214/c6356a49390/page.htm"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Han Dezhi (韩德志)
+          </a>
+          . During my graduate studies, I was awarded the National Scholarship for Master&apos;s
+          Students (Top 1%).
+        </p>
+        <p>
+          If you are interested in the code implementation of the site, welcome to star and fork my
+          open-sourced repository{' '}
+          <a href="https://github.com/duganlx/kiGo" target="_blank" rel="noopener noreferrer">
+            kiGo
+          </a>
+          .
+        </p>
       </div>
       <div className="item">
         <div className="title">📇 Blogs</div>
@@ -89,8 +141,8 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
         <div className="title">🎯 Projects</div>
         <ul>
           <li>
-            kiGo. A front-end application developed using the ant design pro template is the one you
-            are currently using.&nbsp;
+            kiGo. A website developed using the ant design pro template, which is the source code
+            for the site you are looking at now.&nbsp;
             <a href="https://github.com/duganlx/kiGo" target="_blank" rel="noopener noreferrer">
               repository
             </a>
@@ -154,13 +206,14 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
         <div className="title">📖 Educations</div>
         <ul>
           <li>
-            2021.09 - 2023.06. Master. Shanghai Maritime University. Software Engineering. GPA:
-            87/100. Rank: 29/181
+            2021.09 - 2023.06. Master. Shanghai Maritime University. Shanghai. Software Engineering.
+            GPA: 87/100. Rank: 29/181.
           </li>
           <li>
-            2017.09 - 2021.06. Bachelor. Beijing Institute Of Technology, Zhuhai. Computer Science
-            and Technology. GPA: 91/100. Rank: 1/147
+            2017.09 - 2021.06. Bachelor. Beijing Institute Of Technology (Zhuhai). Zhuhai. Computer
+            Science and Technology. GPA: 91/100. Rank: 1/147.
           </li>
+          <li>2014.09 - 2017.06. Shenzhen Nanshan Foreign Language School. Shenzhen.</li>
         </ul>
       </div>
       <div className="item">
