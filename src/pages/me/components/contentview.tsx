@@ -1,5 +1,6 @@
 import { CatalogItem } from '@/services/github';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { Link } from '@umijs/max';
 
 interface ContentviewProps {
   catalog: CatalogItem[];
@@ -107,7 +108,9 @@ const Contentview: React.FC<ContentviewProps> = (props) => {
         <ul>
           {catalog.map((item) => (
             <li key={item.id}>
-              <a href={`${pageBlogsurl}?blogId=${item.id}`}>{item.title}</a>
+              <a>
+                <Link to={`${pageBlogsurl}?blogId=${item.id}`}>{item.title}</Link>
+              </a>
               .&nbsp;
               {item.updateTime}.&nbsp;
               {item.tags.map((tag) => (
