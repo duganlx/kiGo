@@ -1,11 +1,12 @@
 import { CatalogItem, GetBlogsCatalog } from '@/services/github';
 import { getUuidShort } from '@/services/utils';
-import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { useModel } from '@umijs/max';
+import classNames from 'classnames';
 import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import Authordesc from './components/authordesc';
 import Contentview from './components/contentview';
+import style from './index.less';
 
 const Me: React.FC = () => {
   const { setLayoutchgSign } = useModel('me.model', (m: any) => ({
@@ -33,52 +34,19 @@ const Me: React.FC = () => {
     });
   }, []);
 
-  const className = useEmotionCss(() => {
-    return {
-      width: '100vw',
-      height: 'calc(100vh - 40px)',
-      backgroundColor: '#f0f0f0',
-      overflow: 'auto',
-
-      '::-webkit-scrollbar': {
-        backgroundColor: 'white',
-        width: '5px',
-      },
-
-      '::-webkit-scrollbar-thumb': {
-        borderRadius: '5px',
-        backgroundColor: '#d9d9d9',
-      },
-
-      '.scrollview': {
-        marginLeft: '15vw',
-        marginRight: '15vw',
-        backgroundColor: 'white',
-        display: 'flex',
-        flexDirection: 'row',
-        position: 'relative',
-      },
-
-      '.left': {
-        width: '230px',
-
-        '.fixed': {
-          width: '230px',
-          padding: '10px 15px 5px',
-          top: '15px',
-          position: 'sticky',
-        },
-      },
-
-      '.right': {
-        width: 'calc(100% - 230px)',
-        padding: '15px 5px 3px 10px',
-      },
-    };
-  });
+  // const className = useEmotionCss(() => {
+  //   return {
+  //     '.fixed': {
+  //       width: '230px',
+  //       padding: '10px 15px 5px',
+  //       top: '15px',
+  //       position: 'sticky',
+  //     },
+  //   };
+  // });
 
   return (
-    <div className={className}>
+    <div className={classNames(style.meview)}>
       <div className="scrollview">
         <div className="left">
           <div className="fixed">

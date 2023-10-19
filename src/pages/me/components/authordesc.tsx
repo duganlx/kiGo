@@ -1,67 +1,26 @@
 import { useEmotionCss } from '@ant-design/use-emotion-css';
+import classNames from 'classnames';
+import style from '../index.less';
 
 const Authordesc: React.FC = () => {
   const className = useEmotionCss(() => {
     return {
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'start',
-
       '.avatar': {
-        height: '160px',
-        width: '160px',
         backgroundImage: 'url("mine.jpg")',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: '60% 0',
-        borderRadius: '50%',
-      },
-
-      '.authorName': {
-        marginTop: '10px',
-        fontSize: '1.4em',
-        lineHeight: '1.2',
-        fontWeight: '700',
-      },
-
-      '.authorBio': {
-        fontSize: '15px',
-        marginTop: '10px',
-        lineHeight: '24px',
-      },
-
-      '.author-url': {
-        ul: {
-          marginTop: '15px',
-          paddingLeft: '5px',
-          li: {
-            verticalAlign: 'middle',
-            display: 'flex',
-            alignItems: 'center',
-            fontSize: '15px',
-            marginBottom: '14px',
-
-            '.desc': {
-              marginLeft: '5px',
-            },
-          },
-
-          'li.link:hover': {
-            cursor: 'pointer',
-            textDecoration: 'underline',
-          },
-        },
       },
     };
   });
 
   return (
-    <div className={className}>
-      <div className="avatar" />
-      <div className="authorName">Dugan (吕翔)</div>
-      <div className="authorBio">
-        <p>Focusing on full stack development, quantitative development, and AI.</p>
+    <div className={classNames(className, style.authordsc)}>
+      <div className="sm-row">
+        <div className="avatar" />
+        <div className="sm-col">
+          <div className="author-name">Dugan (吕翔)</div>
+          <div className="author-bio">
+            <p>Focusing on full stack development, quantitative development, and AI.</p>
+          </div>
+        </div>
       </div>
       <div className="author-url">
         <ul>
@@ -90,7 +49,7 @@ const Authordesc: React.FC = () => {
                 />
               </g>
             </svg>
-            <div className="desc">840797783@qq.com</div>
+            <div className="desc">lvxiang@jhlfund.com</div>
           </li>
           <li>
             <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" height="16px" width="16px">
