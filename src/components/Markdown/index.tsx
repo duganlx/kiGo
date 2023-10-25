@@ -41,6 +41,7 @@ const Markdown: React.FC<MarkdownProps> = (props) => {
       width: `${width}px`,
       // background: 'black',
       fontSize: '16px',
+      lineHeight: 1.5,
 
       h1: {
         fontSize: '28px',

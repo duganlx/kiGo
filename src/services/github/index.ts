@@ -9,6 +9,7 @@ export type CatalogItem = {
   dir: string;
   createTime: string;
   updateTime: string;
+  publish: boolean;
 };
 
 function sortCatalogItems(items: CatalogItem[]) {

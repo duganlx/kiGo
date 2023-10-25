@@ -48,6 +48,11 @@ function genTagSelectOpt(items: CatalogItem[]) {
   return unitags.map((item) => ({ value: item }));
 }
 
+function filterNoPublish(items: CatalogItem[]) {
+  const publishItems = items.filter((item) => item.publish === true);
+  return publishItems;
+}
+
 function sortCatalogItems(items: CatalogItem[]) {
   // 升序 [oldest, ..., latest]
   const dateMap: Record<string, CatalogItem[]> = {};
@@ -206,7 +211,8 @@ const BlogsView: React.FC = () => {
         const base64_str = (res.data as { content: string | undefined }).content || '';
         const decoded_content = Buffer.from(base64_str, 'base64').toString();
         const catalogjson = JSON.parse(decoded_content);
-        const procItems = sortCatalogItems(catalogjson);
+        let procItems = filterNoPublish(catalogjson);
+        procItems = sortCatalogItems(procItems);
         const [od, ld] = calcEdgeDate(procItems);
         const tso = genTagSelectOpt(procItems);
 

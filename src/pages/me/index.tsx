@@ -29,7 +29,10 @@ const Me: React.FC = () => {
 
   useEffect(() => {
     GetBlogsCatalog().then((data) => {
-      const procItems = (data ?? []).reverse().slice(0, 5);
+      const procItems = (data ?? [])
+        .filter((item) => item.publish === true)
+        .reverse()
+        .slice(0, 5);
       setCatalog(procItems);
     });
   }, []);

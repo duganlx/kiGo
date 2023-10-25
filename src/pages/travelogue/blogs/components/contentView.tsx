@@ -136,7 +136,6 @@ const ContentView: React.FC<ContentViewProps> = (props) => {
     };
   });
 
-  console.log('s', slayoutcfg, 'b', blayoutcfg);
   return (
     <div className={className} ref={divRef}>
       <div className="loading">
